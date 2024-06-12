@@ -1,0 +1,2 @@
+../Core/Src/keypad_4x4_lib.c:13:6:keypad_config	1
+../Core/Src/keypad_4x4_lib.c:39:6:keypad_readkey	4
