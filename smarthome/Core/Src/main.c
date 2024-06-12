@@ -180,7 +180,7 @@ int main(void)
   while (1)
   {
 	  if(HAL_GPIO_ReadPin(PIR_Garage_GPIO_Port, PIR_Garage_Pin) == GPIO_PIN_SET){PIR_Garage = true;}
-	  	//  else {PIR_Garage = false;};
+	  	  else {PIR_Garage = false;};
 	  if(HAL_GPIO_ReadPin(PIR_Kitchen_GPIO_Port, PIR_Kitchen_Pin) == GPIO_PIN_SET){PIR_Kitchen = true;}
 	  	  else {PIR_Kitchen = false;};
 	  if(HAL_GPIO_ReadPin(PIR_Livingroom_GPIO_Port, PIR_Livingroom_Pin) == GPIO_PIN_SET){PIR_Livingroom = true;}
