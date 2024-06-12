@@ -179,7 +179,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //if(HAL_GPIO_ReadPin(PIR_Garage_GPIO_Port, PIR_Garage_Pin) == GPIO_PIN_SET){PIR_Garage = true;}
+	  if(HAL_GPIO_ReadPin(PIR_Garage_GPIO_Port, PIR_Garage_Pin) == GPIO_PIN_SET){PIR_Garage = true;}
 	  	//  else {PIR_Garage = false;};
 	  if(HAL_GPIO_ReadPin(PIR_Kitchen_GPIO_Port, PIR_Kitchen_Pin) == GPIO_PIN_SET){PIR_Kitchen = true;}
 	  	  else {PIR_Kitchen = false;};
