@@ -18,16 +18,20 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "spi.h"
 #include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <math.h>
 #include <stdbool.h>
 #include "keypad_4x4_lib.h"
 #include "string.h"
 #include "lcd_hd44780_lib.h"
+#include "bmp2.h"
+#include "bmp2_config.h"
 
 
 
@@ -51,27 +55,45 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
-char symbol[2] = {"\0"};
-
 unsigned char position=1;
 unsigned char max_pos=4;
-	char *mainmenu[4] = {"1.Kitchen", "2.Living room", "3.Garage", "4.Alarm"};
-	char *menuKitchen[4] = {"1.Temperature", "2.Lighting","",""};
-	char *menuKitchenLighting[4] = {"1.On","2.Off","",""};
-	char *menuKitchenTemperature[4] = {"","","",""};
-	char *menuLivingroom[4] = {"1.Temperature", "2.Lighting","",""};
-	char *menuLivingroomLighting[4] = {"1.On","2.Off","",""};
-	char *menuLivingroomTemperature[4] = {"","","",""};
-	char *menuGarage[4] = {"1.Lighting","","",""};
-	char *menuGarageLighting[4] = {"1.On","2.Off","",""};
-	char *menuAlarm[4] = {"1.On","2.Off","",""};
-	char **act_menu = mainmenu;
-	bool refreshLCD = false;
-	bool alarm = false;
-	bool alarmLED = false;
-	bool alarmBeep = false;
-	bool PIR_Garage, PIR_Livingroom, PIR_Kitchen, PIR_detected;
+
+char symbol[1] = {"\0"};
+char buff[5];
+char result[50];
+
+char *mainmenu[4] = {"1.Kitchen", "2.Living room", "3.Garage", "4.Alarm"};
+char *menuKitchen[4] = {"1.Temperature", "2.Lighting","",""};
+char *menuKitchenLighting[4] = {"1.On","2.Off","3.Set brightness",""};
+char *menuKitchenTemperature[4] = {"1.Set Temp","2. off","",""};
+char *menuLivingroom[4] = {"1.Temperature", "2.Lighting","",""};
+char *menuLivingroomLighting[4] = {"1.On","2.Off","3.Set brightness",""};
+char *menuLivingroomTemperature[4] = {"1.Set Temp","","",""};
+char *menuGarage[4] = {"1.Lighting","","",""};
+char *menuGarageLighting[4] = {"1.On","2.Off","3.Set brightness",""};
+char *menuAlarm[4] = {"1.On","2.Off","3. Set Pin",""};
+char **act_menu = mainmenu;
+
+bool refreshLCD = false;
+bool alarm = false;
+bool alarmLED = false;
+bool alarmBeep = false;
+bool PIR_Garage, PIR_Livingroom, PIR_Kitchen, PIR_detected;
+bool nextStep = false;
+
+int i = 0;
+int brightnessLivingroom = 500;
+int brightnessKitchen = 500;
+int brightnessGarage = 500;
+int tempLivingroom;
+int tempKitchen;
+int pinKey;
+int intPart;
+int fracPart;
+
+double temp = 0.0f;
+double press = 0.0f;
+double roundedValue;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -100,6 +122,10 @@ void move_menu(char *a[])
 	   	}
   }
 
+double roundToTwoDecimals(double value) {
+	return floor(value * 100.0 + 0.5) / 100.0;
+}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -108,17 +134,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   if(htim == &htim2)
   {
-	  if((PIR_Garage == true || PIR_Kitchen == true || PIR_Livingroom == true) && alarm == true){ PIR_detected = true, alarmLED = true;}
+	  if((PIR_Garage == true || PIR_Kitchen == true || PIR_Livingroom == true) && alarm == true)
+	  {
+		  PIR_detected = true, alarmLED = true;
+	  }
 
 	  if(alarmLED == true && PIR_detected == true)
-		  {HAL_GPIO_TogglePin(Alarm_LED_GPIO_Port, Alarm_LED_Pin);
-		  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);}
-			  else
-				  {
-				  HAL_GPIO_WritePin(Alarm_LED_GPIO_Port, Alarm_LED_Pin, GPIO_PIN_RESET);
-				  };
-
-
+	  {
+		  HAL_GPIO_TogglePin(Alarm_LED_GPIO_Port, Alarm_LED_Pin);
+		  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
+	  }
+	  else
+	  {
+		  HAL_GPIO_WritePin(Alarm_LED_GPIO_Port, Alarm_LED_Pin, GPIO_PIN_RESET);
+	  };
   }
 }
 
@@ -156,6 +185,8 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
+  MX_SPI4_Init();
+  MX_SPI5_Init();
   /* USER CODE BEGIN 2 */
   //LOAD CONFIG
   //alarm_config();
@@ -163,6 +194,7 @@ int main(void)
   LCD_Initialize();
  //TIMERS AND INTERRUPTS
   HAL_TIM_Base_Start_IT(&htim2);
+  BMP2_Init(&bmp2dev);
   //START SCREEN
   LCD_WriteCommand(HD44780_CLEAR);
   LCD_WriteText("Welcome to");
@@ -188,92 +220,248 @@ int main(void)
 	  move_menu(act_menu);
  	if (symbol[0] == '*' && act_menu == mainmenu){
  		refreshLCD = true;
- 	  switch (position){
- 		case 1: act_menu = menuKitchen, position = 1, max_pos = 2; break;
- 		case 2: act_menu = menuLivingroom, position = 1, max_pos = 2; break;
- 		case 3: act_menu = menuGarage, position = 1, max_pos = 1; break;
- 		case 4: act_menu = menuAlarm, position = 1, max_pos = 2; break;
- 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
- 	  	  }
+ 		switch (position){
+			case 1: act_menu = menuKitchen, position = 1, max_pos = 2; break;
+			case 2: act_menu = menuLivingroom, position = 1, max_pos = 2; break;
+			case 3: act_menu = menuGarage, position = 1, max_pos = 1; break;
+			case 4:
+					i = 0;
+					HAL_Delay(200);
+					memset(buff, 0, sizeof(buff));
+					LCD_WriteCommand(HD44780_CLEAR);
+					LCD_WriteText("Write PIN");
+					while(1) {
+						refreshLCD = true;
+						symbol[0] = keypad_readkey();
+						if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
+							buff[i] = symbol[0];
+							i++;
+							buff[i] = '\0';
+							LCD_WriteCommand(HD44780_CLEAR);
+							LCD_WriteText("PIN: ");
+							LCD_WriteTextXY(buff, 0, 1);
+						}
+						HAL_Delay(300);
+						symbol[0] = keypad_readkey();
+						if(symbol[0] == '*') {
+							pinKey = atoi(buff);
+							if(pinKey == 1234) {
+								act_menu = menuAlarm, position = 1, max_pos = 2; break;
+							}
+							break;
+						}
+						HAL_Delay(100);
+					}
+					break;
+			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
+ 		}
  	}
- 		else if(symbol[0] == '*' && act_menu == menuAlarm){
- 	 		refreshLCD = true;
- 	 	  switch (position){
- 	 		case 1: alarm = true;
- 	 				LCD_WriteCommand(HD44780_CLEAR);
- 	 				LCD_WriteText("Alarm");
- 	 				LCD_WriteTextXY("turned on",0,1);
- 	 				break;
+ 	else if(symbol[0] == '*' && act_menu == menuAlarm){
+ 		refreshLCD = true;
+ 		switch (position){
+			case 1: alarm = true;
+				PIR_detected = false;
+				alarmLED = false;
+				LCD_WriteCommand(HD44780_CLEAR);
+				LCD_WriteText("Alarm");
+				LCD_WriteTextXY("turned on",0,1);
+				HAL_TIM_Base_Start_IT(&htim2);
+				act_menu = mainmenu, position = 1, max_pos = 4;
+				break;
+
  	 		case 2: alarm = false;
- 	 				PIR_detected = false;
- 	 				alarmLED = false;
- 	 				LCD_WriteCommand(HD44780_CLEAR);
-		 	 		LCD_WriteText("Alarm");
-		 	 		LCD_WriteTextXY("turned off",0,1);
-		 	 		HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_3);
-		 	 		break;
+				PIR_detected = false;
+				alarmLED = false;
+				LCD_WriteCommand(HD44780_CLEAR);
+				LCD_WriteText("Alarm");
+				LCD_WriteTextXY("turned off",0,1);
+				HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_3);
+				HAL_TIM_Base_Stop_IT(&htim2);
+				act_menu = mainmenu, position = 1, max_pos = 4;
+				break;
+
  	 		default: act_menu = menuAlarm, position = 1, max_pos = 2; break;
- 	 	  	  }
- 	 	}
- 		else if(symbol[0] == '*' && act_menu == menuKitchen){
- 		 		 	 		refreshLCD = true;
- 		 		 	 	  switch (position){
- 		 		 	 	  	  	case 1: act_menu = menuKitchenTemperature, position = 1, max_pos = 2; break;
- 		 		 	 	 		case 2: act_menu = menuKitchenLighting, position = 1, max_pos = 2; break;
- 		 		 	 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
- 		 		 	 	  	  }
- 		 		 	 	}
- 		else if(symbol[0] == '*' && act_menu == menuKitchenLighting){
+ 		}
+ 	}
+	else if(symbol[0] == '*' && act_menu == menuKitchen){
+		refreshLCD = true;
+		switch (position){
+			case 1: act_menu = menuKitchenTemperature, position = 1, max_pos = 2; break;
+			case 2: act_menu = menuKitchenLighting, position = 1, max_pos = 3; break;
+			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
+		}
+	}
+	else if(symbol[0] == '*' && act_menu == menuKitchenLighting){
  		 	 		refreshLCD = true;
  		 	 	  switch (position){
  		 	 		case 1: LCD_WriteCommand(HD44780_CLEAR);
  		 	 				LCD_WriteText("Light");
  		 	 				LCD_WriteTextXY("turned on",0,1);
+ 		 	 				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
  		 	 				HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
  		 	 				break;
+
  		 	 		case 2: LCD_WriteCommand(HD44780_CLEAR);
  				 	 		LCD_WriteText("Light");
  				 	 		LCD_WriteTextXY("turned off",0,1);
  				 	 		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
  				 	 		break;
+
+ 		 	 		case 3:
+							i = 0;
+							HAL_Delay(200);
+							memset(buff, 0, sizeof(buff));
+							LCD_WriteCommand(HD44780_CLEAR);
+							LCD_WriteText("Write Bright");
+							while(1) {
+								refreshLCD = true;
+								symbol[0] = keypad_readkey();
+								if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
+									buff[i] = symbol[0];
+									i++;
+									buff[i] = '\0';
+									LCD_WriteCommand(HD44780_CLEAR);
+									LCD_WriteText("Brightness: ");
+									LCD_WriteTextXY(buff, 0, 1);
+								}
+								HAL_Delay(200);
+								symbol[0] = keypad_readkey();
+								if(symbol[0] == '*') {
+									brightnessKitchen = atoi(buff)*10;
+									if(brightnessKitchen >= 1000) {
+										brightnessKitchen = 999;
+									}
+								   __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
+									act_menu = menuKitchenLighting;
+									position = 1;
+									max_pos = 3;
+									break;
+								}
+								HAL_Delay(100);
+							}
+							break;
  		 	 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
  		 	 	  	  }
- 		 	 	}
- 			else if(symbol[0] == '*' && act_menu == menuKitchenTemperature){
- 			 		 	 		refreshLCD = true;
- 			 		 	 	  switch (position){
- 			 		 	 		case 1: LCD_WriteCommand(HD44780_CLEAR);
- 			 		 	 				LCD_WriteText("");
- 			 		 	 				LCD_WriteTextXY("",0,1);
- 			 		 	 				break;
- 			 		 	 		case 2: LCD_WriteCommand(HD44780_CLEAR);
- 			 				 	 		LCD_WriteText("");
- 			 				 	 		LCD_WriteTextXY("",0,1);; break;
- 			 		 	 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
- 			 		 	 	  	  }
- 			 		 	 	}
- 			else if(symbol[0] == '*' && act_menu == menuLivingroom){
- 		 		 	 		refreshLCD = true;
- 		 		 	 	  switch (position){
- 		 		 	 	  	  	case 1: act_menu = menuLivingroomTemperature, position = 1, max_pos = 2; break;
- 		 		 	 	 		case 2: act_menu = menuLivingroomLighting, position = 1, max_pos = 2; break;
- 		 		 	 		default: act_menu = menuLivingroom, position = 1, max_pos = 2; break;
- 		 		 	 	  	  }
- 		 		 	 	}
- 		else if(symbol[0] == '*' && act_menu == menuLivingroomLighting){
+	}
+	else if(symbol[0] == '*' && act_menu == menuKitchenTemperature){
+		refreshLCD = true;
+		temp = 0.0f;
+		switch (position){
+			case 1:
+					while(1) {
+						HAL_Delay(100);
+						BMP2_ReadData(&bmp2dev, &press, &temp);
+						roundedValue = roundToTwoDecimals(temp);
+						intPart = (int)roundedValue;
+						fracPart = (int)((roundedValue - intPart) * 100);
+						snprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
+						HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+						__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 100);
+						LCD_WriteCommand(HD44780_CLEAR);
+						LCD_WriteText(result);
+						i++;
+					}
+					break;
+
+			case 2: LCD_WriteCommand(HD44780_CLEAR);
+					LCD_WriteText("grzanie off");
+					LCD_WriteTextXY("",0,1);
+					__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 0);
+					HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
+					break;
+			case 3:
+					i = 0;
+					HAL_Delay(200);
+					memset(buff, 0, sizeof(buff));
+					LCD_WriteCommand(HD44780_CLEAR);
+					LCD_WriteText("Write Temp");
+					while(1) {
+						refreshLCD = true;
+						symbol[0] = keypad_readkey();
+						if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
+							buff[i] = symbol[0];
+							i++;
+							buff[i] = '\0';
+							LCD_WriteCommand(HD44780_CLEAR);
+							LCD_WriteText("Temp: ");
+							LCD_WriteTextXY(buff, 0, 1);
+						}
+						HAL_Delay(200);
+						symbol[0] = keypad_readkey();
+						if(symbol[0] == '*') {
+							tempKitchen = atoi(buff)*10;
+							if(tempKitchen >= 1000) {
+								tempKitchen = 999;
+							}
+							act_menu = menuKitchenLighting;
+							position = 1;
+							max_pos = 3;
+							break;
+						}
+						HAL_Delay(100);
+					}
+					break;
+			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
+		}
+	}
+	else if(symbol[0] == '*' && act_menu == menuLivingroom){
+					refreshLCD = true;
+				  switch (position){
+						case 1: act_menu = menuLivingroomTemperature, position = 1, max_pos = 2; break;
+						case 2: act_menu = menuLivingroomLighting, position = 1, max_pos = 3; break;
+					default: act_menu = menuLivingroom, position = 1, max_pos = 2; break;
+					  }
+	}
+	else if(symbol[0] == '*' && act_menu == menuLivingroomLighting){
  		 	 		refreshLCD = true;
  		 	 	  switch (position){
  		 	 		case 1: LCD_WriteCommand(HD44780_CLEAR);
  		 	 				LCD_WriteText("Light");
  		 	 				LCD_WriteTextXY("turned on",0,1);
- 		 	 				HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+ 		 	 				__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, brightnessLivingroom);
+							HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
  		 	 				break;
+
  		 	 		case 2: LCD_WriteCommand(HD44780_CLEAR);
  				 	 		LCD_WriteText("Light");
  				 	 		LCD_WriteTextXY("turned off",0,1);
- 				 	 		HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
+ 				 	 		HAL_TIM_PWM_Stop(&h , TIM_CHANNEL_1);
  				 	 		break;
- 		 	 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
+ 		 	 		case 3:
+							i = 0;
+							refreshLCD = true;
+							HAL_Delay(200);
+							memset(buff, 0, sizeof(buff));
+							LCD_WriteCommand(HD44780_CLEAR);
+							LCD_WriteText("Write Bright");
+							while(1) {
+								refreshLCD = true;
+								symbol[0] = keypad_readkey();
+								if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
+									buff[i] = symbol[0];
+									i++;
+									buff[i] = '\0';
+									LCD_WriteCommand(HD44780_CLEAR);
+									LCD_WriteText("Brightness: ");
+									LCD_WriteTextXY(buff, 0, 1);
+								}
+								HAL_Delay(200);
+								symbol[0] = keypad_readkey();
+								if(symbol[0] == '*') {
+									brightnessLivingroom = atoi(buff)*10;
+									if(brightnessLivingroom >= 1000) {
+										brightnessLivingroom = 999;
+									}
+								   __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, brightnessLivingroom);
+									act_menu = menuLivingroomLighting;
+									position = 1;
+									max_pos = 3;
+									break;
+								}
+								HAL_Delay(100);
+							}
+							break;
+ 		 	 		default: act_menu = menuLivingroom, position = 1, max_pos = 2; break;
  		 	 	  	  }
  		 	 	}
  			else if(symbol[0] == '*' && act_menu == menuLivingroomTemperature){
@@ -292,7 +480,7 @@ int main(void)
  			else if(symbol[0] == '*' && act_menu == menuGarage){
  		 		 	 		refreshLCD = true;
  		 		 	 	  switch (position){
- 		 		 	 	  	  	case 1: act_menu = menuGarageLighting, position = 1, max_pos = 2; break;
+ 		 		 	 	  	  	case 1: act_menu = menuGarageLighting, position = 1, max_pos = 3; break;
  		 		 	 		default: act_menu = menuGarage, position = 1, max_pos = 1; break;
  		 		 	 	  	  }
  		 		 	 	}
@@ -302,14 +490,51 @@ int main(void)
  		 	 		case 1: LCD_WriteCommand(HD44780_CLEAR);
  		 	 				LCD_WriteText("Light");
  		 	 				LCD_WriteTextXY("turned on",0,1);
+ 		 	 				__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, brightnessGarage);
  		 	 				HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
  		 	 				break;
+
  		 	 		case 2: LCD_WriteCommand(HD44780_CLEAR);
  				 	 		LCD_WriteText("Light");
  				 	 		LCD_WriteTextXY("turned off",0,1);
  				 	 		HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
  				 	 		break;
- 		 	 		default: act_menu = menuGarageLighting, position = 1, max_pos = 2; break;
+
+ 		 	 		case 3:
+							i = 0;
+							refreshLCD = true;
+							HAL_Delay(200);
+							memset(buff, 0, sizeof(buff));
+							LCD_WriteCommand(HD44780_CLEAR);
+							LCD_WriteText("Write Bright");
+							while(1) {
+								refreshLCD = true;
+								symbol[0] = keypad_readkey();
+								if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
+									buff[i] = symbol[0];
+									i++;
+									buff[i] = '\0';
+									LCD_WriteCommand(HD44780_CLEAR);
+									LCD_WriteText("Brightness: ");
+									LCD_WriteTextXY(buff, 0, 1);
+								}
+								HAL_Delay(200);
+								symbol[0] = keypad_readkey();
+								if(symbol[0] == '*') {
+									brightnessGarage = atoi(buff)*10;
+									if(brightnessGarage >= 1000) {
+										brightnessGarage = 999;
+									}
+								   __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, brightnessGarage);
+									act_menu = menuGarageLighting;
+									position = 1;
+									max_pos = 3;
+									break;
+								}
+								HAL_Delay(100);
+							}
+							break;
+ 		 	 		default: act_menu = menuGarage, position = 1, max_pos = 2; break;
  		 	 	  	  }
  		 	 	}
 

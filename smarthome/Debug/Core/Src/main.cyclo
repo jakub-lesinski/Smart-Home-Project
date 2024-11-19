@@ -1,5 +1,6 @@
-../Core/Src/main.c:80:6:move_menu	7
-../Core/Src/main.c:107:6:HAL_TIM_PeriodElapsedCallback	8
-../Core/Src/main.c:131:5:main	45
-../Core/Src/main.c:336:6:SystemClock_Config	3
-../Core/Src/main.c:390:6:Error_Handler	1
+../Core/Src/main.c:102:6:move_menu	7
+../Core/Src/main.c:125:8:roundToTwoDecimals	1
+../Core/Src/main.c:133:6:HAL_TIM_PeriodElapsedCallback	8
+../Core/Src/main.c:160:5:main	79
+../Core/Src/main.c:556:6:SystemClock_Config	3
+../Core/Src/main.c:610:6:Error_Handler	1
