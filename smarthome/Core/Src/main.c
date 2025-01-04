@@ -18,8 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "i2c.h"
 #include "spi.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -61,11 +63,14 @@ unsigned char max_pos=4;
 char symbol[1] = {"\0"};
 char buff[5];
 char result[50];
+char buffer[100];
+uint8_t rxBuffer[10];
+uint8_t rxIndex = 0;
 
 char *mainmenu[4] = {"1.Kitchen", "2.Living room", "3.Garage", "4.Alarm"};
 char *menuKitchen[4] = {"1.Temperature", "2.Lighting","",""};
 char *menuKitchenLighting[4] = {"1.On","2.Off","3.Set brightness",""};
-char *menuKitchenTemperature[4] = {"1.Set Temp","2. off","",""};
+char *menuKitchenTemperature[4] = {"1.On","2.Off","3.Set Temp",""};
 char *menuLivingroom[4] = {"1.Temperature", "2.Lighting","",""};
 char *menuLivingroomLighting[4] = {"1.On","2.Off","3.Set brightness",""};
 char *menuLivingroomTemperature[4] = {"1.Set Temp","","",""};
@@ -130,6 +135,19 @@ double roundToTwoDecimals(double value) {
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void sendBluetoothData(const char* data){
+	snprintf(buffer, sizeof(buffer), "%s\n", data);
+	HAL_UART_Transmit(&huart6, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
+	HAL_Delay(500);
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == USART3)
+    {
+        HAL_UART_Receive_IT(huart, &rxBuffer[rxIndex], 1);
+    }
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   if(htim == &htim2)
@@ -186,7 +204,8 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM4_Init();
   MX_SPI4_Init();
-  MX_SPI5_Init();
+  MX_I2C1_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
   //LOAD CONFIG
   //alarm_config();
@@ -349,16 +368,22 @@ int main(void)
 		switch (position){
 			case 1:
 					while(1) {
-						HAL_Delay(100);
+						HAL_Delay(500);
 						BMP2_ReadData(&bmp2dev, &press, &temp);
 						roundedValue = roundToTwoDecimals(temp);
 						intPart = (int)roundedValue;
 						fracPart = (int)((roundedValue - intPart) * 100);
 						snprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
+						__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 990);
 						HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
-						__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 100);
 						LCD_WriteCommand(HD44780_CLEAR);
 						LCD_WriteText(result);
+						if(symbol[0] == '*') {
+							act_menu = menuKitchenTemperature;
+							position = 1;
+							max_pos = 3;
+							break;
+						}
 						i++;
 					}
 					break;
@@ -425,7 +450,7 @@ int main(void)
  		 	 		case 2: LCD_WriteCommand(HD44780_CLEAR);
  				 	 		LCD_WriteText("Light");
  				 	 		LCD_WriteTextXY("turned off",0,1);
- 				 	 		HAL_TIM_PWM_Stop(&h , TIM_CHANNEL_1);
+ 				 	 		HAL_TIM_PWM_Stop(&htim4 , TIM_CHANNEL_1);
  				 	 		break;
  		 	 		case 3:
 							i = 0;
@@ -550,6 +575,22 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+ 	//BLUETOOTH
+ 	sendBluetoothData("70");
+ 		  sendBluetoothData("23");
+
+ 		  if (rxBuffer[0] == 51 && rxBuffer[1] == 51) {  // ASCII '33'
+ 		            HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+ 		            rxBuffer[0] = 0;
+ 		            rxBuffer[1] = 0;
+ 		            rxIndex = 0;
+ 		        }
+ 		        else if (rxBuffer[0] == 102) {  // ASCII 'f'
+ 		            HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+ 		            rxBuffer[0] = 0;
+ 		            rxIndex = 0;
+ 		        }
+
   }
   /* USER CODE END 3 */
 }
