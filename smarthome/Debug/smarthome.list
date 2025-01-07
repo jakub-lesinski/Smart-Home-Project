@@ -37,11 +37,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00004d60  00000000  00000000  00029d2b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0001ccda  00000000  00000000  0002ea8b  2**0
+ 17 .debug_line   0001ccd8  00000000  00000000  0002ea8b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000f69a4  00000000  00000000  0004b765  2**0
+ 18 .debug_str    000f69a4  00000000  00000000  0004b763  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  00142109  2**0
+ 19 .comment      00000043  00000000  00000000  00142107  2**0
                   CONTENTS, READONLY
  20 .debug_frame  00005e48  00000000  00000000  0014214c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -7388,7 +7388,7 @@ int main(void)
  	sendBluetoothData("70");
  800392e:	4824      	ldr	r0, [pc, #144]	@ (80039c0 <main+0xda0>)
  8003930:	f7ff f908 	bl	8002b44 <sendBluetoothData>
- 		  sendBluetoothData("23");
+ 	sendBluetoothData("23");
  8003934:	4823      	ldr	r0, [pc, #140]	@ (80039c4 <main+0xda4>)
  8003936:	f7ff f905 	bl	8002b44 <sendBluetoothData>
 
@@ -9255,9 +9255,9 @@ void MX_USART6_UART_Init(void)
  80043ac:	4b14      	ldr	r3, [pc, #80]	@ (8004400 <MX_USART6_UART_Init+0x58>)
  80043ae:	4a15      	ldr	r2, [pc, #84]	@ (8004404 <MX_USART6_UART_Init+0x5c>)
  80043b0:	601a      	str	r2, [r3, #0]
-  huart6.Init.BaudRate = 115200;
+  huart6.Init.BaudRate = 9600;
  80043b2:	4b13      	ldr	r3, [pc, #76]	@ (8004400 <MX_USART6_UART_Init+0x58>)
- 80043b4:	f44f 32e1 	mov.w	r2, #115200	@ 0x1c200
+ 80043b4:	f44f 5216 	mov.w	r2, #9600	@ 0x2580
  80043b8:	605a      	str	r2, [r3, #4]
   huart6.Init.WordLength = UART_WORDLENGTH_8B;
  80043ba:	4b11      	ldr	r3, [pc, #68]	@ (8004400 <MX_USART6_UART_Init+0x58>)

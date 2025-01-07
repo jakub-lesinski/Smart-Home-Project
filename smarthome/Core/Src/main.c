@@ -142,7 +142,7 @@ void sendBluetoothData(const char* data){
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-    if (huart->Instance == USART3)
+    if (huart->Instance == USART6)
     {
         HAL_UART_Receive_IT(huart, &rxBuffer[rxIndex], 1);
     }
@@ -577,7 +577,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
  	//BLUETOOTH
  	sendBluetoothData("70");
- 		  sendBluetoothData("23");
+ 	sendBluetoothData("23");
 
  		  if (rxBuffer[0] == 51 && rxBuffer[1] == 51) {  // ASCII '33'
  		            HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
