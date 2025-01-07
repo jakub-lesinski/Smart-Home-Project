@@ -1,0 +1,29 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id btnBluetoothOff
+id btnBluetoothOn
+id btnBluetoothPaired
+id btnConnect
+id btnSend
+id btnSend2
+id btnkitchen
+id btnlivingRoom
+id buttonLanguage
+id buttonLight
+id buttonLight2
+id main
+layout activity_kitchen
+layout activity_living_room
+layout activity_main
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string hello_blank_fragment
+style Base.Theme.SmartHome
+style Theme.SmartHome
+xml backup_rules
+xml data_extraction_rules

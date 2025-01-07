@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-mergeDebugResources-49:\\layout\\activity_kitchen.xml",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_kitchen.xml"
+    },
+    {
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-mergeDebugResources-49:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-mergeDebugResources-49:\\layout\\fragment_living_room.xml",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\fragment_living_room.xml"
+    },
+    {
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-mergeDebugResources-49:\\layout\\activity_living_room.xml",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_living_room.xml"
+    },
+    {
+        "merged": "com.example.smarthome.app-mergeDebugResources-49:/layout/activity_main.xml",
+        "source": "com.example.smarthome.app-main-52:/layout/activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-mergeDebugResources-49:\\layout\\fragment_kitchen.xml",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\fragment_kitchen.xml"
+    }
+]

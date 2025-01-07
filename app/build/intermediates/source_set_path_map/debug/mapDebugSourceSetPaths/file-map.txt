@@ -1,0 +1,53 @@
+com.example.smarthome.app-emoji2-views-helper-1.2.0-0 C:\Users\rimpe\.gradle\caches\transforms-3\03163a59e2b87275ff366201517c6d88\transformed\emoji2-views-helper-1.2.0\res
+com.example.smarthome.app-profileinstaller-1.3.1-1 C:\Users\rimpe\.gradle\caches\transforms-3\068272eabbb79df159e6dc3bb77b5a97\transformed\profileinstaller-1.3.1\res
+com.example.smarthome.app-lifecycle-viewmodel-ktx-2.6.2-2 C:\Users\rimpe\.gradle\caches\transforms-3\15b8c028511a42c47ead19e67bf9925d\transformed\lifecycle-viewmodel-ktx-2.6.2\res
+com.example.smarthome.app-annotation-experimental-1.4.0-3 C:\Users\rimpe\.gradle\caches\transforms-3\168d98ad2ac81c48a06c104950d47bb7\transformed\annotation-experimental-1.4.0\res
+com.example.smarthome.app-lifecycle-process-2.6.2-4 C:\Users\rimpe\.gradle\caches\transforms-3\1b60d9b1479e1620ea7a73a3e70cb116\transformed\lifecycle-process-2.6.2\res
+com.example.smarthome.app-emoji2-1.2.0-5 C:\Users\rimpe\.gradle\caches\transforms-3\1f12b346925ae0dccc052cd3dd0b71cd\transformed\emoji2-1.2.0\res
+com.example.smarthome.app-window-1.0.0-6 C:\Users\rimpe\.gradle\caches\transforms-3\2721781694ce41c6ea4ef67101e8ba84\transformed\window-1.0.0\res
+com.example.smarthome.app-transition-1.5.0-7 C:\Users\rimpe\.gradle\caches\transforms-3\34f7f0ded6930e2381c2e4597741c5f8\transformed\transition-1.5.0\res
+com.example.smarthome.app-lifecycle-viewmodel-2.6.2-8 C:\Users\rimpe\.gradle\caches\transforms-3\3a89fe290859ed7414fc7708b175a6b3\transformed\lifecycle-viewmodel-2.6.2\res
+com.example.smarthome.app-fragment-ktx-1.7.1-9 C:\Users\rimpe\.gradle\caches\transforms-3\4015cd1a9fcebb70c3e90f25bb3be57f\transformed\fragment-ktx-1.7.1\res
+com.example.smarthome.app-cardview-1.0.0-10 C:\Users\rimpe\.gradle\caches\transforms-3\44f2e44cbbbd3053723086f6aa1a7560\transformed\cardview-1.0.0\res
+com.example.smarthome.app-lifecycle-runtime-2.6.2-11 C:\Users\rimpe\.gradle\caches\transforms-3\45617d0db468f8d53a3937da11d742dd\transformed\lifecycle-runtime-2.6.2\res
+com.example.smarthome.app-viewpager2-1.0.0-12 C:\Users\rimpe\.gradle\caches\transforms-3\4ef3e4eef32e2bba96e0ebebee5744b4\transformed\viewpager2-1.0.0\res
+com.example.smarthome.app-coordinatorlayout-1.1.0-13 C:\Users\rimpe\.gradle\caches\transforms-3\512d4a7aae01e90f5c797a9761e6e369\transformed\coordinatorlayout-1.1.0\res
+com.example.smarthome.app-core-1.13.1-14 C:\Users\rimpe\.gradle\caches\transforms-3\512dd553433fed0a183acc4f624d5ec9\transformed\core-1.13.1\res
+com.example.smarthome.app-navigation-fragment-2.7.7-15 C:\Users\rimpe\.gradle\caches\transforms-3\52a58c40c25a3874d0b243163be1359c\transformed\navigation-fragment-2.7.7\res
+com.example.smarthome.app-lifecycle-runtime-ktx-2.6.2-16 C:\Users\rimpe\.gradle\caches\transforms-3\54c6917e42991db79aa673e712c12841\transformed\lifecycle-runtime-ktx-2.6.2\res
+com.example.smarthome.app-startup-runtime-1.1.1-17 C:\Users\rimpe\.gradle\caches\transforms-3\5626bc91db35ebf1e3aceb6f36f4e774\transformed\startup-runtime-1.1.1\res
+com.example.smarthome.app-activity-ktx-1.9.0-18 C:\Users\rimpe\.gradle\caches\transforms-3\5a6057f6dc00fd454bee83ab32d1dbbd\transformed\activity-ktx-1.9.0\res
+com.example.smarthome.app-lifecycle-livedata-core-ktx-2.6.2-19 C:\Users\rimpe\.gradle\caches\transforms-3\5e21714e3b68f4f7596780b853a608b8\transformed\lifecycle-livedata-core-ktx-2.6.2\res
+com.example.smarthome.app-navigation-ui-2.7.7-20 C:\Users\rimpe\.gradle\caches\transforms-3\5f66845a20254b3dab5ed05a2e9b1e6e\transformed\navigation-ui-2.7.7\res
+com.example.smarthome.app-navigation-runtime-ktx-2.7.7-21 C:\Users\rimpe\.gradle\caches\transforms-3\6fd446d21576b458328007ad925fef4e\transformed\navigation-runtime-ktx-2.7.7\res
+com.example.smarthome.app-lifecycle-livedata-2.6.2-22 C:\Users\rimpe\.gradle\caches\transforms-3\7317357d9c074f8cfcba360885f52b16\transformed\lifecycle-livedata-2.6.2\res
+com.example.smarthome.app-core-ktx-1.13.1-23 C:\Users\rimpe\.gradle\caches\transforms-3\7ea22f16f402ebc6e883abb2d8e44a21\transformed\core-ktx-1.13.1\res
+com.example.smarthome.app-appcompat-1.6.1-24 C:\Users\rimpe\.gradle\caches\transforms-3\7fd3f7b85cd11588703f2df3b96d3544\transformed\appcompat-1.6.1\res
+com.example.smarthome.app-material-1.12.0-25 C:\Users\rimpe\.gradle\caches\transforms-3\8c6e71333fe2aed7ac5ef9137e285269\transformed\material-1.12.0\res
+com.example.smarthome.app-savedstate-ktx-1.2.1-26 C:\Users\rimpe\.gradle\caches\transforms-3\8e8e86bd6d458ed54083bad26df88d5c\transformed\savedstate-ktx-1.2.1\res
+com.example.smarthome.app-navigation-common-ktx-2.7.7-27 C:\Users\rimpe\.gradle\caches\transforms-3\91707258900e5ae466130a56c7c13ff4\transformed\navigation-common-ktx-2.7.7\res
+com.example.smarthome.app-navigation-ui-ktx-2.7.7-28 C:\Users\rimpe\.gradle\caches\transforms-3\92b5638efa74cde254f7069c6ffd90ca\transformed\navigation-ui-ktx-2.7.7\res
+com.example.smarthome.app-navigation-common-2.7.7-29 C:\Users\rimpe\.gradle\caches\transforms-3\9bbdbb422f6449b19a3d2a23f1c1292f\transformed\navigation-common-2.7.7\res
+com.example.smarthome.app-recyclerview-1.1.0-30 C:\Users\rimpe\.gradle\caches\transforms-3\9e72763cedc94cb385f1ce8e4a2afb2a\transformed\recyclerview-1.1.0\res
+com.example.smarthome.app-fragment-1.7.1-31 C:\Users\rimpe\.gradle\caches\transforms-3\9e7c30c4068a92cab627c14fcc308690\transformed\fragment-1.7.1\res
+com.example.smarthome.app-lifecycle-livedata-core-2.6.2-32 C:\Users\rimpe\.gradle\caches\transforms-3\b3558c2520a00a64394b59158d805989\transformed\lifecycle-livedata-core-2.6.2\res
+com.example.smarthome.app-navigation-runtime-2.7.7-33 C:\Users\rimpe\.gradle\caches\transforms-3\bd465d2f2d115531ace27257be1596da\transformed\navigation-runtime-2.7.7\res
+com.example.smarthome.app-lifecycle-viewmodel-savedstate-2.6.2-34 C:\Users\rimpe\.gradle\caches\transforms-3\bfecaebf84eb07da35698e85c53e0473\transformed\lifecycle-viewmodel-savedstate-2.6.2\res
+com.example.smarthome.app-drawerlayout-1.1.1-35 C:\Users\rimpe\.gradle\caches\transforms-3\cd8ecaa2eaedd9ec64442c583f14f074\transformed\drawerlayout-1.1.1\res
+com.example.smarthome.app-lifecycle-service-2.6.2-36 C:\Users\rimpe\.gradle\caches\transforms-3\d43fd6fa41809eda119c4ffafa8bb6f5\transformed\lifecycle-service-2.6.2\res
+com.example.smarthome.app-databinding-runtime-8.3.0-37 C:\Users\rimpe\.gradle\caches\transforms-3\d72de3ee1d23b3a5a3e9c93e921c08ca\transformed\databinding-runtime-8.3.0\res
+com.example.smarthome.app-constraintlayout-2.1.4-38 C:\Users\rimpe\.gradle\caches\transforms-3\ddf324b6a45754fc446fc6eab33ec636\transformed\constraintlayout-2.1.4\res
+com.example.smarthome.app-databinding-adapters-8.3.0-39 C:\Users\rimpe\.gradle\caches\transforms-3\df002d14bc98b6417dcdde32eef0795d\transformed\databinding-adapters-8.3.0\res
+com.example.smarthome.app-appcompat-resources-1.6.1-40 C:\Users\rimpe\.gradle\caches\transforms-3\e0b36974138b4f555dc681ab61bd7cef\transformed\appcompat-resources-1.6.1\res
+com.example.smarthome.app-navigation-fragment-ktx-2.7.7-41 C:\Users\rimpe\.gradle\caches\transforms-3\e30b2546454565d89bae546265c8241e\transformed\navigation-fragment-ktx-2.7.7\res
+com.example.smarthome.app-activity-1.9.0-42 C:\Users\rimpe\.gradle\caches\transforms-3\e9cefb3b4ad2658a2cac7f394fc50920\transformed\activity-1.9.0\res
+com.example.smarthome.app-slidingpanelayout-1.2.0-43 C:\Users\rimpe\.gradle\caches\transforms-3\f7ed630112f98d247c0258a2417df8e2\transformed\slidingpanelayout-1.2.0\res
+com.example.smarthome.app-savedstate-1.2.1-44 C:\Users\rimpe\.gradle\caches\transforms-3\fa12240bf32b116bab2be3fd2087a5f7\transformed\savedstate-1.2.1\res
+com.example.smarthome.app-core-runtime-2.2.0-45 C:\Users\rimpe\.gradle\caches\transforms-3\fb953d4e36c118eb086d73b35b68b69a\transformed\core-runtime-2.2.0\res
+com.example.smarthome.app-pngs-46 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\generated\res\pngs\debug
+com.example.smarthome.app-resValues-47 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\generated\res\resValues\debug
+com.example.smarthome.app-packageDebugResources-48 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.smarthome.app-packageDebugResources-49 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.smarthome.app-debug-50 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.smarthome.app-debug-51 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\src\debug\res
+com.example.smarthome.app-main-52 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\src\main\res
