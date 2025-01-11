@@ -92,9 +92,9 @@ bool alarmBeep = false;
 bool PIR_Garage, PIR_Livingroom, PIR_Kitchen, PIR_detected;
 bool nextStep = false;
 bool kitchenShutter = false;
-bool LivingroomShutter = false;
-bool GarageShutter = false;
-bool GarageGate = false;
+bool livingroomShutter = false;
+bool garageShutter = false;
+bool garageGate = false;
 
 int i = 0;
 int brightnessLivingroom = 500;
@@ -191,7 +191,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
 
@@ -221,6 +220,7 @@ int main(void)
   MX_SPI4_Init();
   MX_I2C1_Init();
   MX_USART6_UART_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   //LOAD CONFIG
   //alarm_config();
@@ -318,9 +318,8 @@ int main(void)
 	else if(symbol[0] == '*' && act_menu == menuKitchen){
 		refreshLCD = true;
 		switch (position){
-			case 1: act_menu = menuKitchenTemperature, position = 1, max_pos = 2; break;
-			case 2: act_menu = menuKitchenLighting, position = 1, max_pos = 3; break;
-			case 3: act_menu = menuKitchenShutter, position = 1, max_pos = 2; break;
+			case 1: act_menu = menuKitchenLighting, position = 1, max_pos = 3; break;
+			case 2: act_menu = menuKitchenShutter, position = 1, max_pos = 2; break;
 			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
 		}
 	}
@@ -376,78 +375,100 @@ int main(void)
  		 	 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
  		 	 	  	  }
 	}
-	else if(symbol[0] == '*' && act_menu == menuKitchenTemperature){
-		refreshLCD = true;
-		temp = 0.0f;
-		switch (position){
-			case 1:
-					while(1) {
-						HAL_Delay(500);
-						BMP2_ReadData(&bmp2dev, &press, &temp);
-						roundedValue = roundToTwoDecimals(temp);
-						intPart = (int)roundedValue;
-						fracPart = (int)((roundedValue - intPart) * 100);
-						snprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
-						__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 990);
-						HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
-						LCD_WriteCommand(HD44780_CLEAR);
-						LCD_WriteText(result);
-						if(symbol[0] == '*') {
-							act_menu = menuKitchenTemperature;
-							position = 1;
-							max_pos = 3;
-							break;
-						}
-						i++;
-					}
-					break;
-
-			case 2: LCD_WriteCommand(HD44780_CLEAR);
-					LCD_WriteText("grzanie off");
-					LCD_WriteTextXY("",0,1);
-					__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 0);
-					HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
-					break;
-			case 3:
-					i = 0;
-					HAL_Delay(200);
-					memset(buff, 0, sizeof(buff));
-					LCD_WriteCommand(HD44780_CLEAR);
-					LCD_WriteText("Write Temp");
-					while(1) {
-						refreshLCD = true;
-						symbol[0] = keypad_readkey();
-						if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
-							buff[i] = symbol[0];
-							i++;
-							buff[i] = '\0';
-							LCD_WriteCommand(HD44780_CLEAR);
-							LCD_WriteText("Temp: ");
-							LCD_WriteTextXY(buff, 0, 1);
-						}
-						HAL_Delay(200);
-						symbol[0] = keypad_readkey();
-						if(symbol[0] == '*') {
-							tempKitchen = atoi(buff)*10;
-							if(tempKitchen >= 1000) {
-								tempKitchen = 999;
-							}
-							act_menu = menuKitchenLighting;
-							position = 1;
-							max_pos = 3;
-							break;
-						}
-						HAL_Delay(100);
-					}
-					break;
-			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
-		}
+//	else if(symbol[0] == '*' && act_menu == menuKitchenTemperature){
+//		refreshLCD = true;
+//		temp = 0.0f;
+//		switch (position){
+//			case 1:
+//					while(1) {
+//						HAL_Delay(500);
+//						BMP2_ReadData(&bmp2dev, &press, &temp);
+//						roundedValue = roundToTwoDecimals(temp);
+//						intPart = (int)roundedValue;
+//						fracPart = (int)((roundedValue - intPart) * 100);
+//						snprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
+//						__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 990);
+//						HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+//						LCD_WriteCommand(HD44780_CLEAR);
+//						LCD_WriteText(result);
+//						if(symbol[0] == '*') {
+//							act_menu = menuKitchenTemperature;
+//							position = 1;
+//							max_pos = 3;
+//							break;
+//						}
+//						i++;
+//					}
+//					break;
+//
+//			case 2: LCD_WriteCommand(HD44780_CLEAR);
+//					LCD_WriteText("grzanie off");
+//					LCD_WriteTextXY("",0,1);
+//					__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 0);
+//					HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
+//					break;
+//			case 3:
+//					i = 0;
+//					HAL_Delay(200);
+//					memset(buff, 0, sizeof(buff));
+//					LCD_WriteCommand(HD44780_CLEAR);
+//					LCD_WriteText("Write Temp");
+//					while(1) {
+//						refreshLCD = true;
+//						symbol[0] = keypad_readkey();
+//						if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
+//							buff[i] = symbol[0];
+//							i++;
+//							buff[i] = '\0';
+//							LCD_WriteCommand(HD44780_CLEAR);
+//							LCD_WriteText("Temp: ");
+//							LCD_WriteTextXY(buff, 0, 1);
+//						}
+//						HAL_Delay(200);
+//						symbol[0] = keypad_readkey();
+//						if(symbol[0] == '*') {
+//							tempKitchen = atoi(buff)*10;
+//							if(tempKitchen >= 1000) {
+//								tempKitchen = 999;
+//							}
+//							act_menu = menuKitchenLighting;
+//							position = 1;
+//							max_pos = 3;
+//							break;
+//						}
+//						HAL_Delay(100);
+//					}
+//					break;
+//			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
+//		}
+//	}
+	else if(symbol[0] == '*' && act_menu == menuKitchenShutter) {
+			refreshLCD = true;
+			switch(position) {
+				case 1:
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
+					HAL_Delay(500);
+				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+				   kitchenShutter = true;
+				   LCD_WriteText("Shutter");
+				   LCD_WriteTextXY("is lowering",0,1);
+				   break;
+				case 2:
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
+					HAL_Delay(500);
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+					kitchenShutter = false;
+					LCD_WriteText("Shutter");
+					LCD_WriteTextXY("go up",0,1);
+			}
 	}
+
 	else if(symbol[0] == '*' && act_menu == menuLivingroom){
 					refreshLCD = true;
 				  switch (position){
 						case 1: act_menu = menuLivingroomTemperature, position = 1, max_pos = 2; break;
 						case 2: act_menu = menuLivingroomLighting, position = 1, max_pos = 3; break;
+						case 3: act_menu = menuLivingroomShutter, position = 1, max_pos = 2; break;
 					default: act_menu = menuLivingroom, position = 1, max_pos = 2; break;
 					  }
 	}
@@ -565,11 +586,31 @@ int main(void)
 			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
 				  }
 			}
-
- 			else if(symbol[0] == '*' && act_menu == menuGarage){
+	else if(symbol[0] == '*' && act_menu == menuLivingroomShutter) {
+			refreshLCD = true;
+			switch(position) {
+				case 1:
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
+					HAL_Delay(500);
+				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+				   livingroomShutter = true;
+				   LCD_WriteText("Shutter");
+				   LCD_WriteTextXY("is lowering",0,1);
+				   break;
+				case 2:
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
+					HAL_Delay(500);
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+					livingroomShutter = false;
+					LCD_WriteText("Shutter");
+					LCD_WriteTextXY("go up",0,1);
+			}
+	}
+	else if(symbol[0] == '*' && act_menu == menuGarage){
  		 		 	 		refreshLCD = true;
  		 		 	 	  switch (position){
  		 		 	 	  	  	case 1: act_menu = menuGarageLighting, position = 1, max_pos = 3; break;
+ 		 		 	 	  	  	case 2: act_menu = menuGarageShutter, position = 1, max_pos = 2; break;
  		 		 	 		default: act_menu = menuGarage, position = 1, max_pos = 1; break;
  		 		 	 	  	  }
  		 		 	 	}
@@ -624,8 +665,28 @@ int main(void)
 							}
 							break;
  		 	 		default: act_menu = menuGarage, position = 1, max_pos = 2; break;
- 		 	 	  	  }
- 		 	 	}
+ 		 	 	  }
+			}
+ 			else if(symbol[0] == '*' && act_menu == menuGarageShutter) {
+ 						refreshLCD = true;
+ 						switch(position) {
+ 							case 1:
+ 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
+ 								HAL_Delay(500);
+ 							   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+ 							  garageShutter= true;
+ 							   LCD_WriteText("Shutter");
+ 							   LCD_WriteTextXY("is lowering",0,1);
+ 							   break;
+ 							case 2:
+ 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
+ 								HAL_Delay(500);
+ 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+ 								garageShutter = false;
+ 								LCD_WriteText("Shutter");
+ 								LCD_WriteTextXY("go up",0,1);
+ 						}
+ 				}
 
  	if (symbol[0] == '#')
  	{
