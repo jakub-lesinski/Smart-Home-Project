@@ -57,15 +57,18 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+#define RX_BUFFER_SIZE 4
 unsigned char position=1;
 unsigned char max_pos=4;
 
 char symbol[1] = {"\0"};
 char buff[5];
 char result[50];
-char buffer[100];
+char buffer[10];
 uint8_t rxBuffer[10];
 uint8_t rxIndex = 0;
+char received[RX_BUFFER_SIZE + 1];
+char lastMessage[RX_BUFFER_SIZE + 1] = "";// +1 na znak '\0' kończący string
 
 char *mainmenu[4] = {"1.Kitchen", "2.Living room", "3.Garage", "4.Alarm"};
 char *menuKitchen[4] = {"1.Temperature", "2.Lighting","",""};
@@ -142,8 +145,12 @@ void sendBluetoothData(const char* data){
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-    if (huart->Instance == USART6)
-    {
+    if (huart->Instance == USART6) {
+        rxIndex++;
+
+        if (rxIndex >= RX_BUFFER_SIZE+2) {
+            rxIndex = 0;
+        }
         HAL_UART_Receive_IT(huart, &rxBuffer[rxIndex], 1);
     }
 }
@@ -177,6 +184,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
 
@@ -220,9 +228,7 @@ int main(void)
   LCD_WriteTextXY("Smarthome system",0,1);
   HAL_Delay(3000);
   refreshLCD = true;
-
-
-
+  HAL_UART_Receive_IT(&huart6, &rxBuffer[rxIndex], 1);  // Rozpocznij odbiór
 
   /* USER CODE END 2 */
 
@@ -572,24 +578,99 @@ int main(void)
  	}
 
  	HAL_Delay(500);
+
+ 	////////////////////////////////////////////////////////////////////////////////////
+ 	for (int i = 0; i < RX_BUFFER_SIZE; i++) {
+ 	    received[i] = rxBuffer[i]; // Kopiuj dane
+ 	}
+ 	received[RX_BUFFER_SIZE] = '\0'; // Dodaj znak końca stringa
+ 	//Wyłączenie światła w kuchnii
+ 	if (strcmp(received, "LK00") == 0 && strcmp(lastMessage, "LK00") != 0) {
+ 	    sendBluetoothData("1");
+ 	    HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
+ 	    strcpy(lastMessage, "LK00");
+ 	}
+ 	//Włączenie światła w kuchnii
+ 	if (strcmp(received, "LK01") == 0 && strcmp(lastMessage, "LK01") != 0) {
+ 	 	sendBluetoothData("2");
+ 	 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
+ 	 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+ 	 	strcpy(lastMessage, "LK01");
+ 	}
+ 	//Wyłączenie światła w salonie
+ 	if (strcmp(received, "LL00") == 0 && strcmp(lastMessage, "LL00") != 0) {
+ 	 	sendBluetoothData("3");
+ 	 	HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
+ 	 	strcpy(lastMessage, "LL00");
+ 	}
+ 	//Włączenie światła w salonie
+ 	if (strcmp(received, "LL01") == 0 && strcmp(lastMessage, "LL01") != 0) {
+ 	 	sendBluetoothData("4");
+ 	 	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, brightnessLivingroom);
+ 	 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+ 	 	strcpy(lastMessage, "LL01");
+ 	}
+ 	//Wyłączenie światła w garażu
+ 	if (strcmp(received, "LG00") == 0 && strcmp(lastMessage, "LG00") != 0) {
+ 	 	sendBluetoothData("5");
+ 	 	HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+ 	 	strcpy(lastMessage, "LG00");
+ 	}
+ 	//Włączenie światła w garażu
+ 	if (strcmp(received, "LG01") == 0 && strcmp(lastMessage, "LG01") != 0) {
+ 	 	sendBluetoothData("6");
+ 	 	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, brightnessGarage);
+ 	 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+ 	 	strcpy(lastMessage, "LG01");
+ 	}
+
+ 	if(rxBuffer[0]=='1')  //Suwak jasności kuchnia
+ 	{
+ 		brightnessKitchen = (received[1] - '0') * 100
+ 		                  + (received[2] - '0') * 10
+ 		                  + (received[3] - '0');
+ 		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
+ 	}
+
+ 	if(received[0]=='2')	//Suwak jasności salon
+ 	{
+ 		brightnessLivingroom = (received[1] - '0') * 100
+                 + (received[2] - '0') * 10
+                 + (received[3] - '0');
+ 		__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, brightnessLivingroom);
+ 	}
+ 	if(received[0]=='3')	//Suwak jasności garaż
+ 	{
+ 		brightnessGarage = (received[1] - '0') * 100
+                 + (received[2] - '0') * 10
+                 + (received[3] - '0');
+ 		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, brightnessGarage);
+ 	}
+ 	//Włączenie alarmu
+ 	if (strcmp(received, "AL01") == 0 && strcmp(lastMessage, "AL01") != 0)
+ 	{
+ 		alarm = true;
+		PIR_detected = false;
+		alarmLED = false;
+		HAL_TIM_Base_Start_IT(&htim2);
+ 	}
+ 	//Wyłączenie alarmu
+ 	if (strcmp(received, "AL00") == 0 && strcmp(lastMessage, "AL00") != 0)
+ 	{
+ 		alarm = false;
+		PIR_detected = false;
+		alarmLED = false;
+		HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_3);
+		HAL_TIM_Base_Stop_IT(&htim2);
+ 	}
+
+ 	////////////////////////////////////////////////////////////////////////////////////
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
- 	//BLUETOOTH
+
  	sendBluetoothData("70");
  	sendBluetoothData("23");
-
- 		  if (rxBuffer[0] == 51 && rxBuffer[1] == 51) {  // ASCII '33'
- 		            HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
- 		            rxBuffer[0] = 0;
- 		            rxBuffer[1] = 0;
- 		            rxIndex = 0;
- 		        }
- 		        else if (rxBuffer[0] == 102) {  // ASCII 'f'
- 		            HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
- 		            rxBuffer[0] = 0;
- 		            rxIndex = 0;
- 		        }
 
   }
   /* USER CODE END 3 */
