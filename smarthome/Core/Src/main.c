@@ -71,14 +71,17 @@ char received[RX_BUFFER_SIZE + 1];
 char lastMessage[RX_BUFFER_SIZE + 1] = "";// +1 na znak '\0' kończący string
 
 char *mainmenu[4] = {"1.Kitchen", "2.Living room", "3.Garage", "4.Alarm"};
-char *menuKitchen[4] = {"1.Temperature", "2.Lighting","",""};
+char *menuKitchen[4] = {"1.Lighting", "2.Shutter","",""};
 char *menuKitchenLighting[4] = {"1.On","2.Off","3.Set brightness",""};
-char *menuKitchenTemperature[4] = {"1.On","2.Off","3.Set Temp",""};
-char *menuLivingroom[4] = {"1.Temperature", "2.Lighting","",""};
+char *menuKitchenShutter[4] = {"1.Down", "2.Up","",""};
+//char *menuKitchenTemperature[4] = {"1.On","2.Off","3.Set Temp",""};
+char *menuLivingroom[4] = {"1.Temperature", "2.Lighting","3.Shutter",""};
 char *menuLivingroomLighting[4] = {"1.On","2.Off","3.Set brightness",""};
 char *menuLivingroomTemperature[4] = {"1.Set Temp","","",""};
-char *menuGarage[4] = {"1.Lighting","","",""};
+char *menuLivingroomShutter[4] = {"1.Down", "2.Up","",""};
+char *menuGarage[4] = {"1.Lighting","2.Shutter","3.Gate",""};
 char *menuGarageLighting[4] = {"1.On","2.Off","3.Set brightness",""};
+char *menuGarageShutter[4] = {"1.Down", "2.Up","",""};
 char *menuAlarm[4] = {"1.On","2.Off","3. Set Pin",""};
 char **act_menu = mainmenu;
 
@@ -88,6 +91,10 @@ bool alarmLED = false;
 bool alarmBeep = false;
 bool PIR_Garage, PIR_Livingroom, PIR_Kitchen, PIR_detected;
 bool nextStep = false;
+bool kitchenShutter = false;
+bool LivingroomShutter = false;
+bool GarageShutter = false;
+bool GarageGate = false;
 
 int i = 0;
 int brightnessLivingroom = 500;
@@ -313,6 +320,7 @@ int main(void)
 		switch (position){
 			case 1: act_menu = menuKitchenTemperature, position = 1, max_pos = 2; break;
 			case 2: act_menu = menuKitchenLighting, position = 1, max_pos = 3; break;
+			case 3: act_menu = menuKitchenShutter, position = 1, max_pos = 2; break;
 			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
 		}
 	}
@@ -495,19 +503,69 @@ int main(void)
  		 	 		default: act_menu = menuLivingroom, position = 1, max_pos = 2; break;
  		 	 	  	  }
  		 	 	}
- 			else if(symbol[0] == '*' && act_menu == menuLivingroomTemperature){
- 			 		 	 		refreshLCD = true;
- 			 		 	 	  switch (position){
- 			 		 	 		case 1: LCD_WriteCommand(HD44780_CLEAR);
- 			 		 	 				LCD_WriteText("");
- 			 		 	 				LCD_WriteTextXY("",0,1);
- 			 		 	 				break;
- 			 		 	 		case 2: LCD_WriteCommand(HD44780_CLEAR);
- 			 				 	 		LCD_WriteText("");
- 			 				 	 		LCD_WriteTextXY("",0,1);; break;
- 			 		 	 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
- 			 		 	 	  	  }
- 			 		 	 	}
+	else if(symbol[0] == '*' && act_menu == menuLivingroomTemperature){
+		refreshLCD = true;
+		switch (position){
+			case 1:
+				while(1) {
+					HAL_Delay(500);
+					BMP2_ReadData(&bmp2dev, &press, &temp);
+					roundedValue = roundToTwoDecimals(temp);
+					intPart = (int)roundedValue;
+					fracPart = (int)((roundedValue - intPart) * 100);
+					snprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
+					__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 990);
+					HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+					LCD_WriteCommand(HD44780_CLEAR);
+					LCD_WriteText(result);
+					if(symbol[0] == '*') {
+						act_menu = menuLivingroomTemperature;
+						position = 1;
+						max_pos = 3;
+						break;
+					}
+					i++;
+				}
+				break;
+			case 2: LCD_WriteCommand(HD44780_CLEAR);
+					LCD_WriteText("Heat");
+					LCD_WriteTextXY("Turned off",0,1);; break;
+			case 3:
+				i = 0;
+				HAL_Delay(200);
+				memset(buff, 0, sizeof(buff));
+				LCD_WriteCommand(HD44780_CLEAR);
+				LCD_WriteText("Write Temp");
+				while(1) {
+					refreshLCD = true;
+					symbol[0] = keypad_readkey();
+					if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
+						buff[i] = symbol[0];
+						i++;
+						buff[i] = '\0';
+						LCD_WriteCommand(HD44780_CLEAR);
+						LCD_WriteText("Temp: ");
+						LCD_WriteTextXY(buff, 0, 1);
+					}
+					HAL_Delay(200);
+					symbol[0] = keypad_readkey();
+					if(symbol[0] == '*') {
+						tempLivingroom = atoi(buff)*10;
+						if(tempLivingroom >= 1000) {
+							tempLivingroom = 999;
+						}
+						act_menu = menuLivingroomTemperature;
+						position = 1;
+						max_pos = 3;
+						break;
+					}
+					HAL_Delay(100);
+				}
+			break;
+			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
+				  }
+			}
+
  			else if(symbol[0] == '*' && act_menu == menuGarage){
  		 		 	 		refreshLCD = true;
  		 		 	 	  switch (position){
