@@ -221,6 +221,7 @@ int main(void)
   MX_I2C1_Init();
   MX_USART6_UART_Init();
   MX_TIM1_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   //LOAD CONFIG
   //alarm_config();
@@ -456,7 +457,7 @@ int main(void)
 				case 2:
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
 					HAL_Delay(500);
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
 					kitchenShutter = false;
 					LCD_WriteText("Shutter");
 					LCD_WriteTextXY("go up",0,1);
