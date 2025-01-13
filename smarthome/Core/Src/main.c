@@ -783,6 +783,110 @@ int main(void)
 		HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_3);
 		HAL_TIM_Base_Stop_IT(&htim2);
  	}
+ 	//Zamknięcie drzwi
+	if (strcmp(received, "DM00") == 0 && strcmp(lastMessage, "DM00") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "DM00");
+	}
+
+	//Otwarcie drzwi
+	 if (strcmp(received, "DM01") == 0 && strcmp(lastMessage, "DM01") != 0)
+	 {
+		//Logika do napisania
+
+		strcpy(lastMessage, "DM01");
+	 }
+
+	 //Zamknięcie bramy
+	if (strcmp(received, "GM00") == 0 && strcmp(lastMessage, "GM00") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "GM00");
+	}
+
+	//Otwarcie bramy
+	if (strcmp(received, "GM01") == 0 && strcmp(lastMessage, "GM01") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "GM01");
+	}
+
+	//Zamknięcie rolety w kuchnii
+	if (strcmp(received, "SK00") == 0 && strcmp(lastMessage, "SK00") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "SK00");
+	}
+
+	//Otwarcie rolety w kuchnii
+	if (strcmp(received, "SK01") == 0 && strcmp(lastMessage, "SK01") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "SK01");
+	}
+
+	//Zamknięcie rolety w salonie
+	if (strcmp(received, "SL00") == 0 && strcmp(lastMessage, "SL00") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "SL00");
+	}
+
+	//Otwarcie rolety w salonie
+	if (strcmp(received, "SL01") == 0 && strcmp(lastMessage, "SL01") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "SL01");
+	}
+
+
+	//Zamknięcie rolety w garażu
+	if (strcmp(received, "SG00") == 0 && strcmp(lastMessage, "SG00") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "SG00");
+	}
+
+	//Otwarcie rolety w garażu
+	if (strcmp(received, "SG01") == 0 && strcmp(lastMessage, "SG01") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "SG01");
+	}
+
+	//Wyłączenie systemu zasilania
+	if (strcmp(received, "PW00") == 0 && strcmp(lastMessage, "PW00") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "PW00");
+	}
+
+	//Włączenie systemu zasilania
+	if (strcmp(received, "PW01") == 0 && strcmp(lastMessage, "PW01") != 0)
+	{
+		//Logika do napisania
+
+		strcpy(lastMessage, "PW01");
+	}
+
+	//Odbieranie zadanej temperatury
+	if(received[0]=='T' && received[1]=='M' )	//Suwak jasności garaż
+	{
+		expectedTemp = (received[2] - '0') * 10 + (received[3] - '0');
+
+		//Logika do napisania
+	}
 
  	////////////////////////////////////////////////////////////////////////////////////
     /* USER CODE END WHILE */
