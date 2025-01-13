@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="dark_blue">#32357a</color>
+    <color name="ic_launcher_background">#4488BF</color>
+    <color name="pink">#C8A2C8</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">SmartHome</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

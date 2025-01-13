@@ -4,10 +4,10 @@ package com.example.smarthome.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.smarthome.R;
@@ -17,54 +17,42 @@ import java.lang.String;
 
 public final class ActivityMainBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final LinearLayout rootView;
 
   @NonNull
-  public final Button btnBluetoothOff;
+  public final AppCompatButton btnBluetoothOff;
 
   @NonNull
-  public final Button btnBluetoothOn;
+  public final AppCompatButton btnBluetoothOn;
 
   @NonNull
-  public final Button btnBluetoothPaired;
+  public final AppCompatButton btnBluetoothPaired;
 
   @NonNull
-  public final Button btnConnect;
+  public final AppCompatButton btnConnect;
 
   @NonNull
-  public final Button btnSend;
+  public final AppCompatButton btnFunctions;
 
   @NonNull
-  public final Button btnSend2;
+  public final AppCompatButton btnPV;
 
-  @NonNull
-  public final Button btnkitchen;
-
-  @NonNull
-  public final Button btnlivingRoom;
-
-  @NonNull
-  public final Button buttonLanguage;
-
-  private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull Button btnBluetoothOff,
-      @NonNull Button btnBluetoothOn, @NonNull Button btnBluetoothPaired,
-      @NonNull Button btnConnect, @NonNull Button btnSend, @NonNull Button btnSend2,
-      @NonNull Button btnkitchen, @NonNull Button btnlivingRoom, @NonNull Button buttonLanguage) {
+  private ActivityMainBinding(@NonNull LinearLayout rootView,
+      @NonNull AppCompatButton btnBluetoothOff, @NonNull AppCompatButton btnBluetoothOn,
+      @NonNull AppCompatButton btnBluetoothPaired, @NonNull AppCompatButton btnConnect,
+      @NonNull AppCompatButton btnFunctions, @NonNull AppCompatButton btnPV) {
     this.rootView = rootView;
     this.btnBluetoothOff = btnBluetoothOff;
     this.btnBluetoothOn = btnBluetoothOn;
     this.btnBluetoothPaired = btnBluetoothPaired;
     this.btnConnect = btnConnect;
-    this.btnSend = btnSend;
-    this.btnSend2 = btnSend2;
-    this.btnkitchen = btnkitchen;
-    this.btnlivingRoom = btnlivingRoom;
-    this.buttonLanguage = buttonLanguage;
+    this.btnFunctions = btnFunctions;
+    this.btnPV = btnPV;
   }
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -90,62 +78,43 @@ public final class ActivityMainBinding implements ViewBinding {
     int id;
     missingId: {
       id = R.id.btnBluetoothOff;
-      Button btnBluetoothOff = ViewBindings.findChildViewById(rootView, id);
+      AppCompatButton btnBluetoothOff = ViewBindings.findChildViewById(rootView, id);
       if (btnBluetoothOff == null) {
         break missingId;
       }
 
       id = R.id.btnBluetoothOn;
-      Button btnBluetoothOn = ViewBindings.findChildViewById(rootView, id);
+      AppCompatButton btnBluetoothOn = ViewBindings.findChildViewById(rootView, id);
       if (btnBluetoothOn == null) {
         break missingId;
       }
 
       id = R.id.btnBluetoothPaired;
-      Button btnBluetoothPaired = ViewBindings.findChildViewById(rootView, id);
+      AppCompatButton btnBluetoothPaired = ViewBindings.findChildViewById(rootView, id);
       if (btnBluetoothPaired == null) {
         break missingId;
       }
 
       id = R.id.btnConnect;
-      Button btnConnect = ViewBindings.findChildViewById(rootView, id);
+      AppCompatButton btnConnect = ViewBindings.findChildViewById(rootView, id);
       if (btnConnect == null) {
         break missingId;
       }
 
-      id = R.id.btnSend;
-      Button btnSend = ViewBindings.findChildViewById(rootView, id);
-      if (btnSend == null) {
+      id = R.id.btnFunctions;
+      AppCompatButton btnFunctions = ViewBindings.findChildViewById(rootView, id);
+      if (btnFunctions == null) {
         break missingId;
       }
 
-      id = R.id.btnSend2;
-      Button btnSend2 = ViewBindings.findChildViewById(rootView, id);
-      if (btnSend2 == null) {
+      id = R.id.btnPV;
+      AppCompatButton btnPV = ViewBindings.findChildViewById(rootView, id);
+      if (btnPV == null) {
         break missingId;
       }
 
-      id = R.id.btnkitchen;
-      Button btnkitchen = ViewBindings.findChildViewById(rootView, id);
-      if (btnkitchen == null) {
-        break missingId;
-      }
-
-      id = R.id.btnlivingRoom;
-      Button btnlivingRoom = ViewBindings.findChildViewById(rootView, id);
-      if (btnlivingRoom == null) {
-        break missingId;
-      }
-
-      id = R.id.buttonLanguage;
-      Button buttonLanguage = ViewBindings.findChildViewById(rootView, id);
-      if (buttonLanguage == null) {
-        break missingId;
-      }
-
-      return new ActivityMainBinding((ConstraintLayout) rootView, btnBluetoothOff, btnBluetoothOn,
-          btnBluetoothPaired, btnConnect, btnSend, btnSend2, btnkitchen, btnlivingRoom,
-          buttonLanguage);
+      return new ActivityMainBinding((LinearLayout) rootView, btnBluetoothOff, btnBluetoothOn,
+          btnBluetoothPaired, btnConnect, btnFunctions, btnPV);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

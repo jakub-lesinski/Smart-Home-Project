@@ -1,106 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/cardview_dark_background"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnBluetoothOn"
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:text="Bluetooth On"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:text="Smart home"
+        android:textColor="@color/white"
+        android:textSize="60dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/btnBluetoothOff"
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:text="Bluetooth Off"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.612"
-        app:layout_constraintStart_toEndOf="@+id/btnBluetoothOn"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:text="Bluetooth options:"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"/>
 
-    <Button
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBluetoothOn"
+            style="android:style/Widget.Button"
+            android:background="@drawable/button_background"
+            android:fontFamily="sans-serif"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="150dp"
+            android:minHeight="60dp"
+            android:textSize="18dp"
+            android:text="Bluetooth On" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBluetoothOff"
+            style="android:style/Widget.Button"
+            android:background="@drawable/button_background"
+            android:fontFamily="sans-serif"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="150dp"
+            android:minHeight="60dp"
+            android:textSize="18dp"
+            android:layout_marginStart="10dp"
+            android:text="Bluetooth Off" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBluetoothPaired"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="120dp"
-        android:text="Check if HC is paired"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        style="android:style/Widget.Button"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:minHeight="60dp"
+        android:textSize="18dp"
+        android:layout_marginBottom="20dp"
+        android:text="Check if HC is paired" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnConnect"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="30dp"
-        android:text="Connect to HC module"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBluetoothPaired" />
-
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:text="Test message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnConnect"
-        app:layout_constraintVertical_bias="0.062" />
-
-    <Button
-        android:id="@+id/btnSend2"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="300dp"
-        android:text="Test message 2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnlivingRoom"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="164dp"
-        android:text="Living Room"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="36dp"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnkitchen"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="168dp"
-        android:text="Kitchen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/buttonLanguage"
+        style="android:style/Widget.Button"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lannguage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSend2" />
+        android:minWidth="200dp"
+        android:minHeight="60dp"
+        android:textSize="18dp"
+        android:layout_marginBottom="40dp"
+        android:text="Connect to HC module" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Functionalities:"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnFunctions"
+        style="android:style/Widget.Button"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:minHeight="60dp"
+        android:textSize="18dp"
+        android:layout_marginBottom="20dp"
+        android:text="Functions" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnPV"
+        style="android:style/Widget.Button"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:minHeight="60dp"
+        android:textSize="18dp"
+        android:text="Solar panel" />
+
+</LinearLayout>

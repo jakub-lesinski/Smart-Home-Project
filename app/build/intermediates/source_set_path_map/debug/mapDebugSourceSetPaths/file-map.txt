@@ -44,10 +44,10 @@ com.example.smarthome.app-activity-1.9.0-42 C:\Users\rimpe\.gradle\caches\transf
 com.example.smarthome.app-slidingpanelayout-1.2.0-43 C:\Users\rimpe\.gradle\caches\transforms-3\f7ed630112f98d247c0258a2417df8e2\transformed\slidingpanelayout-1.2.0\res
 com.example.smarthome.app-savedstate-1.2.1-44 C:\Users\rimpe\.gradle\caches\transforms-3\fa12240bf32b116bab2be3fd2087a5f7\transformed\savedstate-1.2.1\res
 com.example.smarthome.app-core-runtime-2.2.0-45 C:\Users\rimpe\.gradle\caches\transforms-3\fb953d4e36c118eb086d73b35b68b69a\transformed\core-runtime-2.2.0\res
-com.example.smarthome.app-pngs-46 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\generated\res\pngs\debug
-com.example.smarthome.app-resValues-47 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\generated\res\resValues\debug
-com.example.smarthome.app-packageDebugResources-48 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.example.smarthome.app-packageDebugResources-49 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.example.smarthome.app-debug-50 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\build\intermediates\merged_res\debug\mergeDebugResources
-com.example.smarthome.app-debug-51 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\src\debug\res
-com.example.smarthome.app-main-52 C:\Users\rimpe\Desktop\Android studio projekty\SmartHome\app\src\main\res
+com.example.smarthome.app-pngs-46 C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\build\generated\res\pngs\debug
+com.example.smarthome.app-resValues-47 C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\build\generated\res\resValues\debug
+com.example.smarthome.app-packageDebugResources-48 C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.smarthome.app-packageDebugResources-49 C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.smarthome.app-debug-50 C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.smarthome.app-debug-51 C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\debug\res
+com.example.smarthome.app-main-52 C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\res

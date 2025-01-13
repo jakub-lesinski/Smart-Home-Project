@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/cardview_dark_background"
+    tools:context=".FunctionsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Functions"
+        android:textColor="@color/white"
+        android:textSize="60dp"
+        android:layout_marginBottom="60dp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLightning"
+        style="android:style/Widget.Button"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="120dp"
+        android:minHeight="60dp"
+        android:textSize="18dp"
+        android:layout_marginBottom="80dp"
+        android:text="Lightning" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnTemperature"
+        style="android:style/Widget.Button"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="160dp"
+        android:minHeight="60dp"
+        android:textSize="18dp"
+        android:layout_marginBottom="80dp"
+        android:text="Temperature" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnShutters"
+        style="android:style/Widget.Button"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="120dp"
+        android:minHeight="60dp"
+        android:textSize="18dp"
+        android:text="Shutters"
+        android:layout_marginBottom="80dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAlarm"
+        style="android:style/Widget.Button"
+        android:background="@drawable/button_background"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="120dp"
+        android:minHeight="60dp"
+        android:textSize="18dp"
+        android:layout_marginBottom="40dp"
+        android:text="Alarm" />
+
+</LinearLayout>

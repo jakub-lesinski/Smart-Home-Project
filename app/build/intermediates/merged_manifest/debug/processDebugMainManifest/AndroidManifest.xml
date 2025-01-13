@@ -34,13 +34,22 @@
         android:testOnly="true"
         android:theme="@style/Theme.SmartHome" >
         <activity
-            android:name="com.example.smarthome.LivingRoomActivity"
+            android:name="com.example.smarthome.SolarPanelActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.smarthome.GarageActivity"
+            android:name="com.example.smarthome.LightningActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.smarthome.KitchenActivity"
+            android:name="com.example.smarthome.ShuttersActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.smarthome.TemperatureActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.smarthome.AlarmActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.smarthome.FunctionsActivity"
             android:exported="false" />
         <activity
             android:name="com.example.smarthome.MainActivity"

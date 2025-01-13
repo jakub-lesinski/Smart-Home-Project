@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/cardview_dark_background"
+    tools:context=".ShuttersActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shutters"
+            android:textColor="@color/white"
+            android:textSize="60dp"
+            android:textStyle="bold"
+            android:layout_marginRight="20dp"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ShuttersImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/window"
+            app:tint="@color/white"
+            android:layout_marginTop="15dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kitchen:"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="5dp"/>
+
+        <Switch
+            android:id="@+id/switchK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:thumbTint="@color/pink"
+            android:textOff="true"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:layout_marginRight="40dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Living room:"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="5dp"/>
+
+        <Switch
+            android:id="@+id/switchL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:thumbTint="@color/pink"
+            android:textOff="true"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:layout_marginRight="40dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Garage:"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="5dp"/>
+
+        <Switch
+            android:id="@+id/switchG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:thumbTint="@color/pink"
+            android:textOff="true"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:layout_marginRight="40dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
