@@ -129,14 +129,13 @@
             android:textColor="@color/white"
             android:textSize="35dp" />
 
-        <TextView
-            android:id="@+id/Battery2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="ON"
-            android:textColor="@color/white"
-            android:textSize="40dp" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/BatteryImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/off"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 
@@ -156,14 +155,13 @@
             android:textColor="@color/white"
             android:textSize="35dp" />
 
-        <TextView
-            android:id="@+id/SolarPanel2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="ON"
-            android:textColor="@color/white"
-            android:textSize="40dp" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/SPImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/off"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 
@@ -183,14 +181,13 @@
             android:textColor="@color/white"
             android:textSize="35dp" />
 
-        <TextView
-            android:id="@+id/PowerSupply2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="ON"
-            android:textColor="@color/white"
-            android:textSize="40dp" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/PowerSupplyImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/off"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 

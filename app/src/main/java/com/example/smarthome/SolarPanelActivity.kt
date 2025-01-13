@@ -27,7 +27,49 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
 
     override fun onDataReceived(data: String) {
         runOnUiThread {
-            binding.PowerText2.text = "$data W"
+            val firstChar = data[0]
+            val secondChar = data[1]
+            val thirdChar = data[2]
+            val fourthChar = data[3]
+            val fifthChar = data[4]
+
+            if(data.length==4 && firstChar == 'P' && secondChar == 'S') {
+                if(fourthChar=='0') {
+                    binding.PowerSupplyImage.setImageResource(R.drawable.off)
+                }
+
+                if(fourthChar=='1')
+                {
+                    binding.PowerSupplyImage.setImageResource(R.drawable.on)
+                }
+            }
+
+            if(data.length==4 && firstChar == 'S' && secondChar == 'P') {
+                if(fourthChar=='0') {
+                    binding.SPImage.setImageResource(R.drawable.off)
+                }
+
+                if(fourthChar=='1')
+                {
+                    binding.SPImage.setImageResource(R.drawable.on)
+                }
+            }
+
+            if(data.length==4 && firstChar == 'B' && secondChar == 'T') {
+                if(fourthChar=='0') {
+                    binding.BatteryImage.setImageResource(R.drawable.off)
+                }
+
+                if(fourthChar=='1')
+                {
+                    binding.BatteryImage.setImageResource(R.drawable.on)
+                }
+            }
+
+            if(data.length==5 && firstChar == 'W') {
+                val power = "${secondChar}${thirdChar}${fourthChar}${fifthChar}"
+                binding.PowerText2.text = "$power W"
+            }
         }
     }
 
