@@ -46,7 +46,6 @@ object BluetoothCommunicationManager {
                                 val message = stringBuilder.substring(0, newlineIndex)
                                 stringBuilder.delete(0, newlineIndex + 1)
 
-                                // Powiadomienie wszystkich listenerów
                                 withContext(Dispatchers.Main) {
                                     _listeners.forEach { it.onDataReceived(message) }
                                 }

@@ -1,0 +1,8 @@
+../Core/Src/main.c:118:6:move_menu	16	static
+../Core/Src/main.c:141:8:roundToTwoDecimals	16	static
+../Core/Src/main.c:150:6:sendBluetoothData	16	static
+../Core/Src/main.c:156:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/main.c:167:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:194:5:main	32	static
+../Core/Src/main.c:903:6:SystemClock_Config	88	static
+../Core/Src/main.c:957:6:Error_Handler	4	static,ignoring_inline_asm
