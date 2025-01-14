@@ -33,6 +33,17 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
             val fourthChar = data[3]
             val fifthChar = data[4]
 
+            if(data.length == 4 && (firstChar == 'B') && (secondChar == 'T')) {
+                if(fourthChar=='0') {
+                    binding.BatteryImage.setImageResource(R.drawable.off)
+                }
+
+                if(fourthChar=='1')
+                {
+                    binding.BatteryImage.setImageResource(R.drawable.on)
+                }
+            }
+
             if(data.length==4 && firstChar == 'P' && secondChar == 'S') {
                 if(fourthChar=='0') {
                     binding.PowerSupplyImage.setImageResource(R.drawable.off)
@@ -52,17 +63,6 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
                 if(fourthChar=='1')
                 {
                     binding.SPImage.setImageResource(R.drawable.on)
-                }
-            }
-
-            if(data.length==4 && firstChar == 'B' && secondChar == 'T') {
-                if(fourthChar=='0') {
-                    binding.BatteryImage.setImageResource(R.drawable.off)
-                }
-
-                if(fourthChar=='1')
-                {
-                    binding.BatteryImage.setImageResource(R.drawable.on)
                 }
             }
 
