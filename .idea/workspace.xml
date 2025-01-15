@@ -15,7 +15,7 @@
           <theme>@style/Theme.SmartHome</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_lightning.xml">
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_lighting.xml">
         <config>
           <theme>@style/Theme.SmartHome</theme>
         </config>
@@ -47,7 +47,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8dde4294-cbba-47d6-8a2a-c0f894c956e1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_solarpanel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_solarpanel.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
