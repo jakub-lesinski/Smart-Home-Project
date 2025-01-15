@@ -22,7 +22,7 @@
             android:name=".SolarPanelActivity"
             android:exported="false" />
         <activity
-            android:name=".LightningActivity"
+            android:name=".LightingActivity"
             android:exported="false" />
         <activity
             android:name=".ShuttersActivity"

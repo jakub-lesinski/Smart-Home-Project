@@ -48,19 +48,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8dde4294-cbba-47d6-8a2a-c0f894c956e1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/smarthome/BluetoothCommunicationManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/smarthome/BluetoothCommunicationManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/.settings/language.settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/.settings/language.settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/.settings/stm32cubeide.project.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/.settings/stm32cubeide.project.prefs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/Core/Src/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/Debug/Core/Src/main.cyclo" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/Debug/Core/Src/main.cyclo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/Debug/Core/Src/subdir.mk" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/Debug/Core/Src/subdir.mk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/Debug/Core/Startup/subdir.mk" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/Debug/Core/Startup/subdir.mk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/Debug/Drivers/STM32F7xx_HAL_Driver/Src/subdir.mk" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/Debug/Drivers/STM32F7xx_HAL_Driver/Src/subdir.mk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/Debug/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/Debug/makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/Debug/objects.mk" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/Debug/objects.mk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/Debug/smarthome.list" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/Debug/smarthome.list" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/smarthome/Debug/sources.mk" beforeDir="false" afterPath="$PROJECT_DIR$/smarthome/Debug/sources.mk" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

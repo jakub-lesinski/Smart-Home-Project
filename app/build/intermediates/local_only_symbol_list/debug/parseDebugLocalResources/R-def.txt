@@ -78,7 +78,7 @@ id switchL
 id switchPower
 layout activity_alarm
 layout activity_functions
-layout activity_lightning
+layout activity_lighting
 layout activity_main
 layout activity_shutters
 layout activity_solarpanel

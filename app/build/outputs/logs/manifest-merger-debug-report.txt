@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-50:12
-INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-50:12
-INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-50:12
-INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-50:12
+ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-51:12
+INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-51:12
+INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-51:12
+INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-51:12
 MERGED from [androidx.databinding:databinding-adapters:8.3.0] C:\Users\rimpe\.gradle\caches\transforms-3\df002d14bc98b6417dcdde32eef0795d\transformed\databinding-adapters-8.3.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.databinding:databinding-ktx:8.3.0] C:\Users\rimpe\.gradle\caches\transforms-3\4e7c1c56f49be57d0649c62b8ba3ae66\transformed\databinding-ktx-8.3.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.databinding:databinding-runtime:8.3.0] C:\Users\rimpe\.gradle\caches\transforms-3\d72de3ee1d23b3a5a3e9c93e921c08ca\transformed\databinding-runtime-8.3.0\AndroidManifest.xml:2:1-7:12
@@ -93,8 +93,8 @@ ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\Andro
 	android:name
 		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:8:22-70
 application
-ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:11:5-48:19
-INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:11:5-48:19
+ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:11:5-47:19
+INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:11:5-47:19
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\rimpe\.gradle\caches\transforms-3\8c6e71333fe2aed7ac5ef9137e285269\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\rimpe\.gradle\caches\transforms-3\8c6e71333fe2aed7ac5ef9137e285269\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\rimpe\.gradle\caches\transforms-3\ddf324b6a45754fc446fc6eab33ec636\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -141,12 +141,12 @@ ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\Andro
 		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:23:13-37
 	android:name
 		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:22:13-47
-activity#com.example.smarthome.LightningActivity
+activity#com.example.smarthome.LightingActivity
 ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:24:9-26:40
 	android:exported
 		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:26:13-37
 	android:name
-		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:25:13-46
+		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:25:13-45
 activity#com.example.smarthome.ShuttersActivity
 ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:27:9-29:40
 	android:exported
@@ -172,21 +172,21 @@ ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\Andro
 	android:name
 		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:37:13-46
 activity#com.example.smarthome.MainActivity
-ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:39:9-47:20
+ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:39:9-46:20
 	android:exported
 		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:41:13-36
 	android:name
 		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:40:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:42:13-46:29
+ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:42:13-45:29
 action#android.intent.action.MAIN
 ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:43:17-69
 	android:name
 		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:43:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:45:17-77
+ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:44:17-77
 	android:name
-		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:45:27-74
+		ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:44:27-74
 uses-sdk
 INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml

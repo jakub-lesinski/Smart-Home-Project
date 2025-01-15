@@ -17,7 +17,7 @@ class FunctionsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLightning.setOnClickListener {
-            val explicitIntent = Intent(applicationContext, LightningActivity::class.java)
+            val explicitIntent = Intent(applicationContext, LightingActivity::class.java)
             startActivity(explicitIntent)
         }
 

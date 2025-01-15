@@ -1,15 +1,15 @@
 [
     {
+        "merged": "com.example.smarthome.app-mergeDebugResources-49:/layout/activity_lighting.xml",
+        "source": "com.example.smarthome.app-main-52:/layout/activity_lighting.xml"
+    },
+    {
         "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-mergeDebugResources-49:\\layout\\activity_shutters.xml",
         "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_shutters.xml"
     },
     {
         "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-mergeDebugResources-49:\\layout\\activity_alarm.xml",
         "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_alarm.xml"
-    },
-    {
-        "merged": "com.example.smarthome.app-mergeDebugResources-49:/layout/activity_solarpanel.xml",
-        "source": "com.example.smarthome.app-main-52:/layout/activity_solarpanel.xml"
     },
     {
         "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-mergeDebugResources-49:\\layout\\activity_solarpanel.xml",
