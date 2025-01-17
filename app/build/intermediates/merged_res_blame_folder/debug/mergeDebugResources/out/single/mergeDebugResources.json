@@ -1,154 +1,166 @@
 [
     {
-        "merged": "com.example.smarthome.app-debug-50:/layout_activity_main.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/layout/activity_main.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_sun.png.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/sun.png"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_bell.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\bell.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_bottom_btn1.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\bottom_btn1.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_main.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-mdpi/ic_launcher_foreground.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-mdpi\\ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/layout_activity_solarpanel.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/layout/activity_solarpanel.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\layout_activity_lightning.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_lightning.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_solarpanel.png.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/solarpanel.png"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/layout_activity_lightning.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/layout/activity_lightning.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/layout_activity_alarm.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/layout/activity_alarm.xml"
+        "merged": "com.example.smarthome.app-debug-50:/layout_activity_lighting.xml.flat",
+        "source": "com.example.smarthome.app-main-52:/layout/activity_lighting.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-hdpi/ic_launcher_foreground.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_sun.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\sun.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xxhdpi\\ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_lightbulb.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\lightbulb.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_edit_text_background.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/edit_text_background.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\layout_activity_solarpanel.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_solarpanel.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/layout_activity_shutters.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/layout/activity_shutters.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\layout_activity_functions.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_functions.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/layout_activity_temperature.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/layout/activity_temperature.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\layout_activity_shutters.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_shutters.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_sun2.png.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/sun2.png"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_edit_text_background.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\edit_text_background.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_window.png.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/window.png"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_thermometer.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\thermometer.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_thermometer.png.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/thermometer.png"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_solarpanel.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\solarpanel.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xxxhdpi\\ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/xml/data_extraction_rules.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_sun2.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\sun2.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\xml\\data_extraction_rules.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/layout_activity_functions.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/layout/activity_functions.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xhdpi\\ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/xml_backup_rules.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/xml/backup_rules.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_button_background.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/button_background.xml"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\layout_activity_alarm.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_alarm.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_bottom_btn1.png.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/bottom_btn1.png"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_off.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\off.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_bell.png.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/bell.png"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_window.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\window.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-xhdpi/ic_launcher_foreground.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_button_background.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\button_background.xml"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/drawable_lightbulb.png.flat",
-        "source": "com.example.smarthome.app-main-52:/drawable/lightbulb.png"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_on.png.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\on.png"
     },
     {
-        "merged": "com.example.smarthome.app-debug-50:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.smarthome.app-main-52:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\layout_activity_temperature.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_temperature.xml"
+    },
+    {
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-hdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     }
 ]

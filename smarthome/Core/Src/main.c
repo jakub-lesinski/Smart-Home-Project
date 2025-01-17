@@ -106,6 +106,7 @@ int tempKitchen;
 int pinKey;
 int intPart;
 int fracPart;
+int expectedTemp=30;
 
 double temp = 0.0f;
 double press = 0.0f;
@@ -200,6 +201,7 @@ bool Output_On(void) {
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
 void sendBluetoothData(const char* data){
 	snprintf(buffer, sizeof(buffer), "%s\n", data);
 	HAL_UART_Transmit(&huart6, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
@@ -785,39 +787,33 @@ int main(void)
  	received[RX_BUFFER_SIZE] = '\0'; // Dodaj znak końca stringa
  	//Wyłączenie światła w kuchnii
  	if (strcmp(received, "LK00") == 0 && strcmp(lastMessage, "LK00") != 0) {
- 	    sendBluetoothData("1");
  	    HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
  	    strcpy(lastMessage, "LK00");
  	}
  	//Włączenie światła w kuchnii
  	if (strcmp(received, "LK01") == 0 && strcmp(lastMessage, "LK01") != 0) {
- 	 	sendBluetoothData("2");
  	 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
  	 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
  	 	strcpy(lastMessage, "LK01");
  	}
  	//Wyłączenie światła w salonie
  	if (strcmp(received, "LL00") == 0 && strcmp(lastMessage, "LL00") != 0) {
- 	 	sendBluetoothData("3");
  	 	HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
  	 	strcpy(lastMessage, "LL00");
  	}
  	//Włączenie światła w salonie
  	if (strcmp(received, "LL01") == 0 && strcmp(lastMessage, "LL01") != 0) {
- 	 	sendBluetoothData("4");
  	 	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, brightnessLivingroom);
  	 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
  	 	strcpy(lastMessage, "LL01");
  	}
- 	//Wyłączenie światła w garażu
+
  	if (strcmp(received, "LG00") == 0 && strcmp(lastMessage, "LG00") != 0) {
- 	 	sendBluetoothData("5");
  	 	HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
  	 	strcpy(lastMessage, "LG00");
  	}
- 	//Włączenie światła w garażu
+
  	if (strcmp(received, "LG01") == 0 && strcmp(lastMessage, "LG01") != 0) {
- 	 	sendBluetoothData("6");
  	 	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, brightnessGarage);
  	 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
  	 	strcpy(lastMessage, "LG01");

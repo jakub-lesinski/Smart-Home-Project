@@ -31,8 +31,18 @@ class TemperatureActivity : AppCompatActivity(), BluetoothCommunicationManager.B
     }
 
     override fun onDataReceived(data: String) {
-        // Wyświetlenie odebranych danych na TextView
-        binding.CurrTempText2.text = "$data°C"
+        val firstChar = data[0]
+        val secondChar = data[1]
+        val thirdChar = data[2]
+        val fourthChar = data[3]
+
+
+        //Dopracować
+        if(data.length == 4 && firstChar == 'T' && secondChar == 'M') {
+            val temp = "${thirdChar}${fourthChar}"
+            binding.CurrTempText2.text = "$temp°C"
+        }
+
     }
 
     override fun onError(error: String) {

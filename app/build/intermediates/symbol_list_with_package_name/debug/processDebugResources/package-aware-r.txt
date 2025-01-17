@@ -3147,6 +3147,8 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable off
+drawable on
 drawable solarpanel
 drawable sun
 drawable sun2
@@ -3159,7 +3161,7 @@ id ALT
 id BOTTOM_END
 id BOTTOM_START
 id Battery
-id Battery2
+id BatteryImage
 id BellImage
 id CTRL
 id CurrTempText
@@ -3175,7 +3177,7 @@ id LayoutAlarm
 id META
 id NO_DEBUG
 id PowerSupply
-id PowerSupply2
+id PowerSupplyImage
 id PowerSystem
 id PowerText2
 id PowerText3
@@ -3183,10 +3185,10 @@ id SHIFT
 id SHOW_ALL
 id SHOW_PATH
 id SHOW_PROGRESS
+id SPImage
 id SYM
 id ShuttersImage
 id SolarPanel
-id SolarPanel2
 id SolarPanelImage
 id SolarText
 id TOP_END
@@ -3841,7 +3843,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_alarm
 layout activity_functions
-layout activity_lightning
+layout activity_lighting
 layout activity_main
 layout activity_shutters
 layout activity_solarpanel
