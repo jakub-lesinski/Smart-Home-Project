@@ -82,8 +82,6 @@ void Error_Handler(void);
 #define TIM2_CH1_RGB_Garage_GPIO_Port GPIOA
 #define PowerSupply_Pin GPIO_PIN_3
 #define PowerSupply_GPIO_Port GPIOA
-#define TIM3_CH3_RGB_Kitchen_Pin GPIO_PIN_0
-#define TIM3_CH3_RGB_Kitchen_GPIO_Port GPIOB
 #define TIM1_CH1_Kitchen_Shutter_Pin GPIO_PIN_9
 #define TIM1_CH1_Kitchen_Shutter_GPIO_Port GPIOE
 #define PIR_Livingroom_Pin GPIO_PIN_10
@@ -92,14 +90,16 @@ void Error_Handler(void);
 #define TIM1_CH2_LivingRoom_Shutter_GPIO_Port GPIOE
 #define PIR_Garage_Pin GPIO_PIN_12
 #define PIR_Garage_GPIO_Port GPIOE
-#define TIM3_CH3_Garage_Shutter_Pin GPIO_PIN_13
-#define TIM3_CH3_Garage_Shutter_GPIO_Port GPIOE
+#define TIM1_CH3_Garage_Shutter_Pin GPIO_PIN_13
+#define TIM1_CH3_Garage_Shutter_GPIO_Port GPIOE
 #define PIR_Kitchen_Pin GPIO_PIN_14
 #define PIR_Kitchen_GPIO_Port GPIOE
 #define Alarm_LED_Pin GPIO_PIN_15
 #define Alarm_LED_GPIO_Port GPIOE
 #define TIM2_CH3_Alarm_Buzzer_Pin GPIO_PIN_10
 #define TIM2_CH3_Alarm_Buzzer_GPIO_Port GPIOB
+#define TIM2_CH4_RGB_Kitchen_Pin GPIO_PIN_11
+#define TIM2_CH4_RGB_Kitchen_GPIO_Port GPIOB
 #define STLK_RX_Pin GPIO_PIN_8
 #define STLK_RX_GPIO_Port GPIOD
 #define STLK_TX_Pin GPIO_PIN_9

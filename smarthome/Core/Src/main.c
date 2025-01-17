@@ -34,7 +34,7 @@
 #include "lcd_hd44780_lib.h"
 #include "bmp2.h"
 #include "bmp2_config.h"
-
+#include "INA219.h"
 
 
 /* USER CODE END Includes */
@@ -82,6 +82,7 @@ char *menuLivingroomShutter[4] = {"1.Down", "2.Up","",""};
 char *menuGarage[4] = {"1.Lighting","2.Shutter","3.Gate",""};
 char *menuGarageLighting[4] = {"1.On","2.Off","3.Set brightness",""};
 char *menuGarageShutter[4] = {"1.Down", "2.Up","",""};
+char *menuGarageGate[4] = {"1.Down", "2.Up","",""};
 char *menuAlarm[4] = {"1.On","2.Off","3. Set Pin",""};
 char **act_menu = mainmenu;
 
@@ -109,6 +110,15 @@ int fracPart;
 double temp = 0.0f;
 double press = 0.0f;
 double roundedValue;
+
+//ENERGY SYSTEM
+INA219_t ina219, ina219_2;
+
+uint16_t vbus, vshunt, current, power, vbus2, vshunt2, current2, power2;
+uint16_t energymode = 1;
+bool PowerSupply, Battery, Output, Solar;
+float solar_volts, vshunt_volts, solar_amps, output_volts, vshunt_volts2, current_amps2, solar_power;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -140,7 +150,52 @@ void move_menu(char *a[])
 double roundToTwoDecimals(double value) {
 	return floor(value * 100.0 + 0.5) / 100.0;
 }
+//ENERGY SYSTEM
 
+// Wył/Wł PowerSupply
+void PowerSupply_SetState(GPIO_PinState state) {
+    HAL_GPIO_WritePin(PowerSupply_GPIO_Port, PowerSupply_Pin, state);
+}
+
+bool PowerSupply_Off(void) {
+    PowerSupply_SetState(GPIO_PIN_SET);
+    return PowerSupply = false;
+}
+
+bool PowerSupply_On(void) {
+    PowerSupply_SetState(GPIO_PIN_RESET);
+    return PowerSupply = true;
+}
+
+// Wył/Wł baterie
+void Battery_SetState(GPIO_PinState state) {
+    HAL_GPIO_WritePin(Battery_GPIO_Port, Battery_Pin, state);
+}
+
+bool Battery_Off(void) {
+    Battery_SetState(GPIO_PIN_SET);
+    return Battery = false;
+}
+
+bool Battery_On(void) {
+    Battery_SetState(GPIO_PIN_RESET);
+    return Battery = true;
+}
+
+// Wył/Wł wyjście
+void Output_SetState(GPIO_PinState state) {
+    HAL_GPIO_WritePin(Output_GPIO_Port, Output_Pin, state);
+}
+
+bool Output_Off(void) {
+    Output_SetState(GPIO_PIN_SET);
+    return Output = false;
+}
+
+bool Output_On(void) {
+    Output_SetState(GPIO_PIN_RESET);
+    return Output = true;
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -224,12 +279,15 @@ int main(void)
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   //LOAD CONFIG
-  //alarm_config();
   keypad_config();
   LCD_Initialize();
  //TIMERS AND INTERRUPTS
   HAL_TIM_Base_Start_IT(&htim2);
   BMP2_Init(&bmp2dev);
+  //ENERGY SYSTEM
+  INA219_Init(&ina219, &hi2c1, INA219_ADDRESS);
+  INA219_Init(&ina219_2, &hi2c2, INA219_ADDRESS);
+  Output_On();
   //START SCREEN
   LCD_WriteCommand(HD44780_CLEAR);
   LCD_WriteText("Welcome to");
@@ -237,6 +295,7 @@ int main(void)
   HAL_Delay(3000);
   refreshLCD = true;
   HAL_UART_Receive_IT(&huart6, &rxBuffer[rxIndex], 1);  // Rozpocznij odbiór
+
 
   /* USER CODE END 2 */
 
@@ -255,8 +314,8 @@ int main(void)
  		refreshLCD = true;
  		switch (position){
 			case 1: act_menu = menuKitchen, position = 1, max_pos = 2; break;
-			case 2: act_menu = menuLivingroom, position = 1, max_pos = 2; break;
-			case 3: act_menu = menuGarage, position = 1, max_pos = 1; break;
+			case 2: act_menu = menuLivingroom, position = 1, max_pos = 3; break;
+			case 3: act_menu = menuGarage, position = 1, max_pos = 3; break;
 			case 4:
 					i = 0;
 					HAL_Delay(200);
@@ -330,14 +389,14 @@ int main(void)
  		 	 		case 1: LCD_WriteCommand(HD44780_CLEAR);
  		 	 				LCD_WriteText("Light");
  		 	 				LCD_WriteTextXY("turned on",0,1);
- 		 	 				__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
- 		 	 				HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+ 		 	 				__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, brightnessKitchen);
+ 		 	 				HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
  		 	 				break;
 
  		 	 		case 2: LCD_WriteCommand(HD44780_CLEAR);
  				 	 		LCD_WriteText("Light");
  				 	 		LCD_WriteTextXY("turned off",0,1);
- 				 	 		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
+ 				 	 		HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_4);
  				 	 		break;
 
  		 	 		case 3:
@@ -364,7 +423,7 @@ int main(void)
 									if(brightnessKitchen >= 1000) {
 										brightnessKitchen = 999;
 									}
-								   __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
+								   __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, brightnessKitchen);
 									act_menu = menuKitchenLighting;
 									position = 1;
 									max_pos = 3;
@@ -376,80 +435,16 @@ int main(void)
  		 	 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
  		 	 	  	  }
 	}
-//	else if(symbol[0] == '*' && act_menu == menuKitchenTemperature){
-//		refreshLCD = true;
-//		temp = 0.0f;
-//		switch (position){
-//			case 1:
-//					while(1) {
-//						HAL_Delay(500);
-//						BMP2_ReadData(&bmp2dev, &press, &temp);
-//						roundedValue = roundToTwoDecimals(temp);
-//						intPart = (int)roundedValue;
-//						fracPart = (int)((roundedValue - intPart) * 100);
-//						snprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
-//						__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 990);
-//						HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
-//						LCD_WriteCommand(HD44780_CLEAR);
-//						LCD_WriteText(result);
-//						if(symbol[0] == '*') {
-//							act_menu = menuKitchenTemperature;
-//							position = 1;
-//							max_pos = 3;
-//							break;
-//						}
-//						i++;
-//					}
-//					break;
-//
-//			case 2: LCD_WriteCommand(HD44780_CLEAR);
-//					LCD_WriteText("grzanie off");
-//					LCD_WriteTextXY("",0,1);
-//					__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 0);
-//					HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
-//					break;
-//			case 3:
-//					i = 0;
-//					HAL_Delay(200);
-//					memset(buff, 0, sizeof(buff));
-//					LCD_WriteCommand(HD44780_CLEAR);
-//					LCD_WriteText("Write Temp");
-//					while(1) {
-//						refreshLCD = true;
-//						symbol[0] = keypad_readkey();
-//						if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
-//							buff[i] = symbol[0];
-//							i++;
-//							buff[i] = '\0';
-//							LCD_WriteCommand(HD44780_CLEAR);
-//							LCD_WriteText("Temp: ");
-//							LCD_WriteTextXY(buff, 0, 1);
-//						}
-//						HAL_Delay(200);
-//						symbol[0] = keypad_readkey();
-//						if(symbol[0] == '*') {
-//							tempKitchen = atoi(buff)*10;
-//							if(tempKitchen >= 1000) {
-//								tempKitchen = 999;
-//							}
-//							act_menu = menuKitchenLighting;
-//							position = 1;
-//							max_pos = 3;
-//							break;
-//						}
-//						HAL_Delay(100);
-//					}
-//					break;
-//			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
-//		}
-//	}
+
 	else if(symbol[0] == '*' && act_menu == menuKitchenShutter) {
 			refreshLCD = true;
+			HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 			switch(position) {
 				case 1:
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
 					HAL_Delay(500);
 				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+
 				   kitchenShutter = true;
 				   LCD_WriteText("Shutter");
 				   LCD_WriteTextXY("is lowering",0,1);
@@ -589,19 +584,20 @@ int main(void)
 			}
 	else if(symbol[0] == '*' && act_menu == menuLivingroomShutter) {
 			refreshLCD = true;
+			HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
 			switch(position) {
 				case 1:
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 500);
 					HAL_Delay(500);
-				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
 				   livingroomShutter = true;
 				   LCD_WriteText("Shutter");
 				   LCD_WriteTextXY("is lowering",0,1);
 				   break;
 				case 2:
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 2000);
 					HAL_Delay(500);
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
 					livingroomShutter = false;
 					LCD_WriteText("Shutter");
 					LCD_WriteTextXY("go up",0,1);
@@ -612,6 +608,7 @@ int main(void)
  		 		 	 	  switch (position){
  		 		 	 	  	  	case 1: act_menu = menuGarageLighting, position = 1, max_pos = 3; break;
  		 		 	 	  	  	case 2: act_menu = menuGarageShutter, position = 1, max_pos = 2; break;
+ 		 		 	 	  	  	case 3: act_menu = menuGarageGate, position = 1, max_pos = 2; break;
  		 		 	 		default: act_menu = menuGarage, position = 1, max_pos = 1; break;
  		 		 	 	  	  }
  		 		 	 	}
@@ -670,24 +667,46 @@ int main(void)
 			}
  			else if(symbol[0] == '*' && act_menu == menuGarageShutter) {
  						refreshLCD = true;
+ 						HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
  						switch(position) {
  							case 1:
- 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
+ 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
  								HAL_Delay(500);
- 							   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+ 							   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
  							  garageShutter= true;
  							   LCD_WriteText("Shutter");
  							   LCD_WriteTextXY("is lowering",0,1);
  							   break;
  							case 2:
- 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
+ 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
  								HAL_Delay(500);
- 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+ 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
  								garageShutter = false;
  								LCD_WriteText("Shutter");
  								LCD_WriteTextXY("go up",0,1);
  						}
  				}
+ 			else if(symbol[0] == '*' && act_menu == menuGarageGate) {
+ 			 						refreshLCD = true;
+ 			 						HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+ 			 						switch(position) {
+ 			 							case 1:
+ 			 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
+ 			 								HAL_Delay(500);
+ 			 							   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
+ 			 							  garageShutter= true;
+ 			 							   LCD_WriteText("Gate");
+ 			 							   LCD_WriteTextXY("is lowering",0,1);
+ 			 							   break;
+ 			 							case 2:
+ 			 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
+ 			 								HAL_Delay(500);
+ 			 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
+ 			 								garageShutter = false;
+ 			 								LCD_WriteText("Gate");
+ 			 								LCD_WriteTextXY("go up",0,1);
+ 			 						}
+ 			 				}
 
  	if (symbol[0] == '#')
  	{
@@ -697,8 +716,68 @@ int main(void)
  		max_pos = 4;
  	}
 
- 	HAL_Delay(500);
+ 	HAL_Delay(200);
+ 	///////////////SYSTEM ZASILANIA///////////////////////////////////////////////////
+ 	vbus = INA219_ReadBusVoltage(&ina219);
+ 		 	   vshunt = INA219_ReadShuntVolage(&ina219);
+ 		 	   current = INA219_ReadCurrent(&ina219);
+ 		 	   power = vbus * current;
 
+ 		 	   // Konwersja na jednostki podstawowe (V i A)
+ 		 	    solar_volts = vbus / 1000.0;  // mV -> V
+ 		 	    vshunt_volts = vshunt / 1000.0; // mV -> V
+ 		 	    solar_amps = current / 1000.0; // mA -> A
+
+ 		 	//        Zaokrąglanie do 3 miejsc po przecinku
+ 		 	       solar_volts = round(solar_volts * 1000) / 1000;
+ 		 	       vshunt_volts = round(vshunt_volts * 1000) / 1000;
+ 		 	       solar_amps = round(solar_amps * 1000) / 1000;
+ 		 	       solar_power = solar_volts * solar_amps;
+
+ 		  vbus2 = INA219_ReadBusVoltage(&ina219_2);
+ 		   vshunt2 = INA219_ReadShuntVolage(&ina219_2);
+ 			   current2 = INA219_ReadCurrent(&ina219_2);
+ 			   power2 = vbus2 * current2;
+
+ 			   // Konwersja na jednostki podstawowe (V i A)
+ 			   	 	    output_volts = vbus2 / 1000.0;  // mV -> V
+ 			   	 	    vshunt_volts2 = vshunt2 / 1000.0; // mV -> V
+ 			   	 	    current_amps2 = current2 / 1000.0; // mA -> A
+
+ 			   	 	      //  Zaokrąglanie do 3 miejsc po przecinku
+ 			   	 	       output_volts = round(output_volts * 1000) / 1000;
+ 			   	 	       vshunt_volts2 = round(vshunt_volts2 * 1000) / 1000;
+ 			   	 	       current_amps2 = round(current_amps2 * 1000) /  1000;
+ 	    if(Output == true)
+ 	    {
+ 		if(solar_volts >= 4.6) energymode = 1;
+ 		else if(PowerSupply == false && solar_volts < 4.5 && energymode != 2) energymode = 2;
+ 		if(output_volts < 4) energymode = 3;
+ 	    }
+ 		if(Output == false) energymode = 4; //wylaczenie zasilania, panel jesli jest w stanie to ładuje akumulator
+ 		switch (energymode) {
+ 		case 1:
+ 			PowerSupply_Off();
+ 			Battery_Off();
+ 			Solar = true;
+ 			break;
+ 		case 2:
+ 			Battery_On();
+ 			Solar = false;
+ 			break;
+
+ 		case 3:
+ 			Battery_Off();
+ 			PowerSupply_On();
+ 			Solar = false;
+
+ 			break;
+ 		case 4:
+ 			PowerSupply_Off();
+ 			Battery_Off();
+ 			Solar = false;
+ 			break;
+ 		}
  	////////////////////////////////////////////////////////////////////////////////////
  	for (int i = 0; i < RX_BUFFER_SIZE; i++) {
  	    received[i] = rxBuffer[i]; // Kopiuj dane
@@ -883,7 +962,7 @@ int main(void)
 	//Odbieranie zadanej temperatury
 	if(received[0]=='T' && received[1]=='M' )	//Suwak jasności garaż
 	{
-		expectedTemp = (received[2] - '0') * 10 + (received[3] - '0');
+		//expectedTemp = (received[2] - '0') * 10 + (received[3] - '0');
 
 		//Logika do napisania
 	}

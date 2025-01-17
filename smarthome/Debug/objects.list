@@ -1,4 +1,4 @@
-"./Core/Src/alarm.o"
+"./Core/Src/INA219.o"
 "./Core/Src/bmp2.o"
 "./Core/Src/bmp2_config.o"
 "./Core/Src/gpio.o"

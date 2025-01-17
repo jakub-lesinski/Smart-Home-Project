@@ -5,7 +5,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Core/Src/alarm.c \
+../Core/Src/INA219.c \
 ../Core/Src/bmp2.c \
 ../Core/Src/bmp2_config.c \
 ../Core/Src/gpio.c \
@@ -23,7 +23,7 @@ C_SRCS += \
 ../Core/Src/usart.c 
 
 OBJS += \
-./Core/Src/alarm.o \
+./Core/Src/INA219.o \
 ./Core/Src/bmp2.o \
 ./Core/Src/bmp2_config.o \
 ./Core/Src/gpio.o \
@@ -41,7 +41,7 @@ OBJS += \
 ./Core/Src/usart.o 
 
 C_DEPS += \
-./Core/Src/alarm.d \
+./Core/Src/INA219.d \
 ./Core/Src/bmp2.d \
 ./Core/Src/bmp2_config.d \
 ./Core/Src/gpio.d \
@@ -66,7 +66,7 @@ Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/alarm.cyclo ./Core/Src/alarm.d ./Core/Src/alarm.o ./Core/Src/alarm.su ./Core/Src/bmp2.cyclo ./Core/Src/bmp2.d ./Core/Src/bmp2.o ./Core/Src/bmp2.su ./Core/Src/bmp2_config.cyclo ./Core/Src/bmp2_config.d ./Core/Src/bmp2_config.o ./Core/Src/bmp2_config.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/keypad_4x4_lib.cyclo ./Core/Src/keypad_4x4_lib.d ./Core/Src/keypad_4x4_lib.o ./Core/Src/keypad_4x4_lib.su ./Core/Src/lcd_hd44780_lib.cyclo ./Core/Src/lcd_hd44780_lib.d ./Core/Src/lcd_hd44780_lib.o ./Core/Src/lcd_hd44780_lib.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/spi.cyclo ./Core/Src/spi.d ./Core/Src/spi.o ./Core/Src/spi.su ./Core/Src/stm32f7xx_hal_msp.cyclo ./Core/Src/stm32f7xx_hal_msp.d ./Core/Src/stm32f7xx_hal_msp.o ./Core/Src/stm32f7xx_hal_msp.su ./Core/Src/stm32f7xx_it.cyclo ./Core/Src/stm32f7xx_it.d ./Core/Src/stm32f7xx_it.o ./Core/Src/stm32f7xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32f7xx.cyclo ./Core/Src/system_stm32f7xx.d ./Core/Src/system_stm32f7xx.o ./Core/Src/system_stm32f7xx.su ./Core/Src/tim.cyclo ./Core/Src/tim.d ./Core/Src/tim.o ./Core/Src/tim.su ./Core/Src/usart.cyclo ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart.su
+	-$(RM) ./Core/Src/INA219.cyclo ./Core/Src/INA219.d ./Core/Src/INA219.o ./Core/Src/INA219.su ./Core/Src/bmp2.cyclo ./Core/Src/bmp2.d ./Core/Src/bmp2.o ./Core/Src/bmp2.su ./Core/Src/bmp2_config.cyclo ./Core/Src/bmp2_config.d ./Core/Src/bmp2_config.o ./Core/Src/bmp2_config.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/keypad_4x4_lib.cyclo ./Core/Src/keypad_4x4_lib.d ./Core/Src/keypad_4x4_lib.o ./Core/Src/keypad_4x4_lib.su ./Core/Src/lcd_hd44780_lib.cyclo ./Core/Src/lcd_hd44780_lib.d ./Core/Src/lcd_hd44780_lib.o ./Core/Src/lcd_hd44780_lib.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/spi.cyclo ./Core/Src/spi.d ./Core/Src/spi.o ./Core/Src/spi.su ./Core/Src/stm32f7xx_hal_msp.cyclo ./Core/Src/stm32f7xx_hal_msp.d ./Core/Src/stm32f7xx_hal_msp.o ./Core/Src/stm32f7xx_hal_msp.su ./Core/Src/stm32f7xx_it.cyclo ./Core/Src/stm32f7xx_it.d ./Core/Src/stm32f7xx_it.o ./Core/Src/stm32f7xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32f7xx.cyclo ./Core/Src/system_stm32f7xx.d ./Core/Src/system_stm32f7xx.o ./Core/Src/system_stm32f7xx.su ./Core/Src/tim.cyclo ./Core/Src/tim.d ./Core/Src/tim.o ./Core/Src/tim.su ./Core/Src/usart.cyclo ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart.su
 
 .PHONY: clean-Core-2f-Src
 
