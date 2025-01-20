@@ -160,11 +160,13 @@ void PowerSupply_SetState(GPIO_PinState state) {
 
 bool PowerSupply_Off(void) {
     PowerSupply_SetState(GPIO_PIN_SET);
+    sendBluetoothData("PS00");
     return PowerSupply = false;
 }
 
 bool PowerSupply_On(void) {
     PowerSupply_SetState(GPIO_PIN_RESET);
+    sendBluetoothData("PS01");
     return PowerSupply = true;
 }
 
@@ -175,11 +177,13 @@ void Battery_SetState(GPIO_PinState state) {
 
 bool Battery_Off(void) {
     Battery_SetState(GPIO_PIN_SET);
+    sendBluetoothData("BT00");
     return Battery = false;
 }
 
 bool Battery_On(void) {
     Battery_SetState(GPIO_PIN_RESET);
+    sendBluetoothData("BT01");
     return Battery = true;
 }
 
@@ -446,7 +450,6 @@ int main(void)
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
 					HAL_Delay(500);
 				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
-
 				   kitchenShutter = true;
 				   LCD_WriteText("Shutter");
 				   LCD_WriteTextXY("is lowering",0,1);
@@ -693,18 +696,18 @@ int main(void)
  			 						HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
  			 						switch(position) {
  			 							case 1:
- 			 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
+ 			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 500);
  			 								HAL_Delay(500);
- 			 							   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
- 			 							  garageShutter= true;
+ 			 							   __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
+ 			 							  garageGate= true;
  			 							   LCD_WriteText("Gate");
  			 							   LCD_WriteTextXY("is lowering",0,1);
  			 							   break;
  			 							case 2:
- 			 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
+ 			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 2000);
  			 								HAL_Delay(500);
- 			 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
- 			 								garageShutter = false;
+ 			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
+ 			 								garageGate = false;
  			 								LCD_WriteText("Gate");
  			 								LCD_WriteTextXY("go up",0,1);
  			 						}
@@ -821,24 +824,24 @@ int main(void)
 
  	if(rxBuffer[0]=='1')  //Suwak jasności kuchnia
  	{
- 		brightnessKitchen = (received[1] - '0') * 100
- 		                  + (received[2] - '0') * 10
- 		                  + (received[3] - '0');
+ 		brightnessKitchen = (received[1] - '0') * 1000
+ 		                  + (received[2] - '0') * 100
+ 		                  + (received[3] - '0')* 10;
  		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
  	}
 
  	if(received[0]=='2')	//Suwak jasności salon
  	{
- 		brightnessLivingroom = (received[1] - '0') * 100
-                 + (received[2] - '0') * 10
-                 + (received[3] - '0');
+ 		brightnessLivingroom = (received[1] - '0') * 1000
+                 + (received[2] - '0') * 100
+                 + (received[3] - '0') * 10;
  		__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, brightnessLivingroom);
  	}
  	if(received[0]=='3')	//Suwak jasności garaż
  	{
- 		brightnessGarage = (received[1] - '0') * 100
-                 + (received[2] - '0') * 10
-                 + (received[3] - '0');
+ 		brightnessGarage = (received[1] - '0') * 1000
+                 + (received[2] - '0') * 100
+                 + (received[3] - '0') * 10;
  		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, brightnessGarage);
  	}
  	//Włączenie alarmu
@@ -861,7 +864,7 @@ int main(void)
  	//Zamknięcie drzwi
 	if (strcmp(received, "DM00") == 0 && strcmp(lastMessage, "DM00") != 0)
 	{
-		//Logika do napisania
+		//Logika do napisanie
 
 		strcpy(lastMessage, "DM00");
 	}
@@ -877,7 +880,10 @@ int main(void)
 	 //Zamknięcie bramy
 	if (strcmp(received, "GM00") == 0 && strcmp(lastMessage, "GM00") != 0)
 	{
-		//Logika do napisania
+		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 500);
+		HAL_Delay(500);
+		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
+		garageGate= true;
 
 		strcpy(lastMessage, "GM00");
 	}
@@ -885,7 +891,10 @@ int main(void)
 	//Otwarcie bramy
 	if (strcmp(received, "GM01") == 0 && strcmp(lastMessage, "GM01") != 0)
 	{
-		//Logika do napisania
+		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 2000);
+		HAL_Delay(500);
+		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
+		garageGate = false;
 
 		strcpy(lastMessage, "GM01");
 	}
@@ -893,32 +902,42 @@ int main(void)
 	//Zamknięcie rolety w kuchnii
 	if (strcmp(received, "SK00") == 0 && strcmp(lastMessage, "SK00") != 0)
 	{
-		//Logika do napisania
 
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
+		HAL_Delay(500);
+	   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+	   kitchenShutter = true;
 		strcpy(lastMessage, "SK00");
 	}
 
 	//Otwarcie rolety w kuchnii
 	if (strcmp(received, "SK01") == 0 && strcmp(lastMessage, "SK01") != 0)
 	{
-		//Logika do napisania
-
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
+		HAL_Delay(500);
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+		kitchenShutter = false;
 		strcpy(lastMessage, "SK01");
 	}
 
 	//Zamknięcie rolety w salonie
 	if (strcmp(received, "SL00") == 0 && strcmp(lastMessage, "SL00") != 0)
 	{
-		//Logika do napisania
 
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 500);
+		HAL_Delay(500);
+	   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
+	   livingroomShutter = true;
 		strcpy(lastMessage, "SL00");
 	}
 
 	//Otwarcie rolety w salonie
 	if (strcmp(received, "SL01") == 0 && strcmp(lastMessage, "SL01") != 0)
 	{
-		//Logika do napisania
-
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 2000);
+		HAL_Delay(500);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
+		livingroomShutter = false;
 		strcpy(lastMessage, "SL01");
 	}
 
@@ -926,23 +945,27 @@ int main(void)
 	//Zamknięcie rolety w garażu
 	if (strcmp(received, "SG00") == 0 && strcmp(lastMessage, "SG00") != 0)
 	{
-		//Logika do napisania
-
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
+		HAL_Delay(500);
+	    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
+	   	garageShutter= true;
 		strcpy(lastMessage, "SG00");
 	}
 
 	//Otwarcie rolety w garażu
 	if (strcmp(received, "SG01") == 0 && strcmp(lastMessage, "SG01") != 0)
 	{
-		//Logika do napisania
-
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
+		HAL_Delay(500);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
+		garageShutter = false;
 		strcpy(lastMessage, "SG01");
 	}
 
 	//Wyłączenie systemu zasilania
 	if (strcmp(received, "PW00") == 0 && strcmp(lastMessage, "PW00") != 0)
 	{
-		//Logika do napisania
+		OutputOff();
 
 		strcpy(lastMessage, "PW00");
 	}
@@ -950,7 +973,7 @@ int main(void)
 	//Włączenie systemu zasilania
 	if (strcmp(received, "PW01") == 0 && strcmp(lastMessage, "PW01") != 0)
 	{
-		//Logika do napisania
+		OutputOn();
 
 		strcpy(lastMessage, "PW01");
 	}
