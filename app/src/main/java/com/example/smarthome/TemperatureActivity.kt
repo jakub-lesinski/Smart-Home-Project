@@ -36,8 +36,6 @@ class TemperatureActivity : AppCompatActivity(), BluetoothCommunicationManager.B
         val thirdChar = data[2]
         val fourthChar = data[3]
 
-
-        //Dopracować
         if(firstChar == 'T' && secondChar == 'M') {
             val temp = "${thirdChar}${fourthChar}"
             binding.CurrTempText2.text = "$temp°C"

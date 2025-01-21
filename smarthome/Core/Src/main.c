@@ -380,7 +380,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-      BMP2_ReadData(&bmp2dev, &press, &temp);
+
 
 	  if(HAL_GPIO_ReadPin(PIR_Garage_GPIO_Port, PIR_Garage_Pin) == GPIO_PIN_SET){PIR_Garage = true;}
 	  	  else {PIR_Garage = false;};
@@ -606,12 +606,9 @@ int main(void)
 					HAL_Delay(500);
 					BMP2_ReadData(&bmp2dev, &press, &temp);
 					roundedValue = roundToTwoDecimals(temp);
-					char bufferTemp[20];
-					sprintf(bufferTemp, "%d", roundedValue);
-					sendBluetoothData(bufferTemp);
 					intPart = (int)roundedValue;
 					fracPart = (int)((roundedValue - intPart) * 100);
-					snprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
+					sprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
 					LCD_WriteCommand(HD44780_CLEAR);
 					LCD_WriteText(result);
                     __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3, PI_output*1000);
@@ -796,13 +793,19 @@ int main(void)
  	}
 
  	HAL_Delay(200);
+ 	///////////////SYSTEM TEMPERATURY///////////////////////////////////////////////////
+ 	BMP2_ReadData(&bmp2dev, &press, &temp);
+ 	roundedValue = roundToTwoDecimals(temp);
+ 	char bufferTemp[20];
+	sprintf(bufferTemp, "TM%d", roundedValue);
+	sendBluetoothData(bufferTemp);
  	///////////////SYSTEM ZASILANIA///////////////////////////////////////////////////
  	vbus = INA219_ReadBusVoltage(&ina219);
  		 	   vshunt = INA219_ReadShuntVolage(&ina219);
  		 	   current = INA219_ReadCurrent(&ina219);
  		 	   power = vbus * current;
  		 	   char bufferPower[10];
- 		 	   sprintf(bufferPower, "%d", power);
+ 		 	   sprintf(bufferPower, "W%d", power);
  		 	   sendBluetoothData(bufferPower);
 
  		 	   // Konwersja na jednostki podstawowe (V i A)

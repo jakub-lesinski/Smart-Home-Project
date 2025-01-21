@@ -9,7 +9,6 @@ import com.example.smarthome.databinding.ActivitySolarpanelBinding
 class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.BluetoothDataListener {
 
     private lateinit var binding: ActivitySolarpanelBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -64,8 +63,8 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
                 }
             }
 
-            if(data.length==5 && firstChar == 'W') {
-                val power = "${secondChar}${thirdChar}${fourthChar}"
+            if(firstChar == 'W') {
+                val power = "${secondChar}.${thirdChar}${fourthChar}"
                 binding.PowerText2.text = "$power W"
             }
         }
