@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-51:12
-INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-51:12
-INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-51:12
-INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-51:12
+ADDED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\Users\rimpe\Documents\GitHub\Smart-Home-Project\app\src\main\AndroidManifest.xml:2:1-48:12
 MERGED from [androidx.databinding:databinding-adapters:8.3.0] C:\Users\rimpe\.gradle\caches\transforms-3\df002d14bc98b6417dcdde32eef0795d\transformed\databinding-adapters-8.3.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.databinding:databinding-ktx:8.3.0] C:\Users\rimpe\.gradle\caches\transforms-3\4e7c1c56f49be57d0649c62b8ba3ae66\transformed\databinding-ktx-8.3.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.databinding:databinding-runtime:8.3.0] C:\Users\rimpe\.gradle\caches\transforms-3\d72de3ee1d23b3a5a3e9c93e921c08ca\transformed\databinding-runtime-8.3.0\AndroidManifest.xml:2:1-7:12

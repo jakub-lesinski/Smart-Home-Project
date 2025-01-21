@@ -352,6 +352,7 @@ int main(void)
   MX_USART6_UART_Init();
   MX_TIM1_Init();
   MX_I2C2_Init();
+  MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
   //LOAD CONFIG
   keypad_config();
@@ -361,6 +362,11 @@ int main(void)
   BMP2_Init(&bmp2dev);
   HAL_TIM_Base_Start_IT(&htim4);
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
   //ENERGY SYSTEM
   INA219_Init(&ina219, &hi2c1, INA219_ADDRESS);
   INA219_Init(&ina219_2, &hi2c2, INA219_ADDRESS);
@@ -517,7 +523,7 @@ int main(void)
 
 	else if(symbol[0] == '*' && act_menu == menuKitchenShutter) {
 			refreshLCD = true;
-			HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+
 			switch(position) {
 				case 1:
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
@@ -660,7 +666,7 @@ int main(void)
 			}
 	else if(symbol[0] == '*' && act_menu == menuLivingroomShutter) {
 			refreshLCD = true;
-			HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+
 			switch(position) {
 				case 1:
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 500);
@@ -743,7 +749,6 @@ int main(void)
 			}
  			else if(symbol[0] == '*' && act_menu == menuGarageShutter) {
  						refreshLCD = true;
- 						HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
  						switch(position) {
  							case 1:
  								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
@@ -764,11 +769,11 @@ int main(void)
  				}
  			else if(symbol[0] == '*' && act_menu == menuGarageGate) {
  			 						refreshLCD = true;
- 			 						HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+
  			 						switch(position) {
  			 							case 1:
  			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 500);
- 			 								HAL_Delay(500);
+ 			 								HAL_Delay(1200);
  			 							   __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
  			 							  garageGate= true;
  			 							   LCD_WriteText("Gate");
@@ -776,7 +781,7 @@ int main(void)
  			 							   break;
  			 							case 2:
  			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 2000);
- 			 								HAL_Delay(500);
+ 			 								HAL_Delay(1500);
  			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
  			 								garageGate = false;
  			 								LCD_WriteText("Gate");
@@ -944,16 +949,14 @@ int main(void)
  	//Zamknięcie drzwi
 	if (strcmp(received, "DM00") == 0 && strcmp(lastMessage, "DM00") != 0)
 	{
-		//Logika do napisanie
-
+		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_3, 500);
 		strcpy(lastMessage, "DM00");
 	}
 
 	//Otwarcie drzwi
 	 if (strcmp(received, "DM01") == 0 && strcmp(lastMessage, "DM01") != 0)
 	 {
-		//Logika do napisania
-
+		 __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_3, 1500);
 		strcpy(lastMessage, "DM01");
 	 }
 
@@ -961,7 +964,7 @@ int main(void)
 	if (strcmp(received, "GM00") == 0 && strcmp(lastMessage, "GM00") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 500);
-		HAL_Delay(500);
+		HAL_Delay(1200);
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
 		garageGate= true;
 
@@ -972,7 +975,7 @@ int main(void)
 	if (strcmp(received, "GM01") == 0 && strcmp(lastMessage, "GM01") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 2000);
-		HAL_Delay(500);
+		HAL_Delay(1500);
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
 		garageGate = false;
 
@@ -1069,10 +1072,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
- 	sendBluetoothData("TM70");
- 	sendBluetoothData("TM23");
-
   }
   /* USER CODE END 3 */
 }

@@ -44,7 +44,7 @@ class AlarmActivity : AppCompatActivity() {
         }
 
         // Obsługa przełącznika do otwierania drzwi
-        binding.switch2.setOnCheckedChangeListener { _, isChecked ->
+        binding.switch3.setOnCheckedChangeListener { _, isChecked ->
             val command = if (isChecked) "GM01" else "GM00"
             BluetoothCommunicationManager.sendData(command)
         }
