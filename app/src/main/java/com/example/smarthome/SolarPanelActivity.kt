@@ -12,8 +12,8 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySolarpanelBinding.inflate(layoutInflater)
         enableEdgeToEdge()
+        binding = ActivitySolarpanelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.switchPower.setOnCheckedChangeListener { _, isChecked ->
@@ -26,15 +26,13 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
     }
 
     override fun onDataReceived(data: String) {
-        runOnUiThread {
             val firstChar = data[0]
             val secondChar = data[1]
             val thirdChar = data[2]
             val fourthChar = data[3]
-            val fifthChar = data[4]
 
-            if(data.length == 4 && (firstChar == 'B') && (secondChar == 'T')) {
-                if(fourthChar=='0') {
+            if((firstChar == 'B') && (secondChar == 'T')) {
+                if(thirdChar=='0') {
                     binding.BatteryImage.setImageResource(R.drawable.off)
                 }
 
@@ -45,7 +43,7 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
             }
 
             if(data.length==4 && firstChar == 'P' && secondChar == 'S') {
-                if(fourthChar=='0') {
+                if(thirdChar=='0') {
                     binding.PowerSupplyImage.setImageResource(R.drawable.off)
                 }
 
@@ -56,7 +54,7 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
             }
 
             if(data.length==4 && firstChar == 'S' && secondChar == 'P') {
-                if(fourthChar=='0') {
+                if(thirdChar=='0') {
                     binding.SPImage.setImageResource(R.drawable.off)
                 }
 
@@ -67,16 +65,14 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
             }
 
             if(data.length==5 && firstChar == 'W') {
-                val power = "${secondChar}${thirdChar}${fourthChar}${fifthChar}"
+                val power = "${secondChar}${thirdChar}${fourthChar}"
                 binding.PowerText2.text = "$power W"
             }
         }
-    }
 
-    override fun onError(error: String) {
-        runOnUiThread {
-            Toast.makeText(this, "Błąd: $error", Toast.LENGTH_SHORT).show()
-        }
+    override fun onError(error: String)
+    {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

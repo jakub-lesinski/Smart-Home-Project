@@ -16,6 +16,10 @@
         "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\bell.png"
     },
     {
+        "merged": "com.example.smarthome.app-debug-50:/layout_activity_solarpanel.xml.flat",
+        "source": "com.example.smarthome.app-main-52:/layout/activity_solarpanel.xml"
+    },
+    {
         "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_bottom_btn1.png.flat",
         "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\drawable\\bottom_btn1.png"
     },
@@ -50,10 +54,6 @@
     {
         "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-xxxhdpi\\ic_launcher.webp"
-    },
-    {
-        "merged": "com.example.smarthome.app-debug-50:/layout_activity_lighting.xml.flat",
-        "source": "com.example.smarthome.app-main-52:/layout/activity_lighting.xml"
     },
     {
         "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_sun.png.flat",
@@ -142,6 +142,10 @@
     {
         "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\mipmap-hdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\layout_activity_lighting.xml.flat",
+        "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_lighting.xml"
     },
     {
         "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-debug-50:\\drawable_on.png.flat",

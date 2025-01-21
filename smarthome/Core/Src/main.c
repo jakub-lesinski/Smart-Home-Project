@@ -279,7 +279,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == USART6) {
         rxIndex++;
 
-        if (rxIndex >= RX_BUFFER_SIZE+2) {
+        if (rxIndex >= RX_BUFFER_SIZE) {
             rxIndex = 0;
         }
         HAL_UART_Receive_IT(huart, &rxBuffer[rxIndex], 1);
@@ -861,13 +861,13 @@ int main(void)
  	received[RX_BUFFER_SIZE] = '\0'; // Dodaj znak końca stringa
  	//Wyłączenie światła w kuchnii
  	if (strcmp(received, "LK00") == 0 && strcmp(lastMessage, "LK00") != 0) {
- 	    HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_3);
+ 	    HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_4);
  	    strcpy(lastMessage, "LK00");
  	}
  	//Włączenie światła w kuchnii
  	if (strcmp(received, "LK01") == 0 && strcmp(lastMessage, "LK01") != 0) {
- 	 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
- 	 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+ 	 	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, brightnessKitchen);
+ 	 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
  	 	strcpy(lastMessage, "LK01");
  	}
  	//Wyłączenie światła w salonie
@@ -898,7 +898,7 @@ int main(void)
  		brightnessKitchen = (received[1] - '0') * 1000
  		                  + (received[2] - '0') * 100
  		                  + (received[3] - '0')* 10;
- 		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, brightnessKitchen);
+ 		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, brightnessKitchen);
  	}
 
  	if(received[0]=='2')	//Suwak jasności salon
@@ -1062,8 +1062,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
- 	sendBluetoothData("70");
- 	sendBluetoothData("23");
+ 	sendBluetoothData("TM70");
+ 	sendBluetoothData("TM23");
 
   }
   /* USER CODE END 3 */

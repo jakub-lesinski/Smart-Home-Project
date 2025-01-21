@@ -42,9 +42,21 @@ class LightingActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                Toast.makeText(this@LightingActivity, "Final Progress: $currentProgress1", Toast.LENGTH_SHORT).show()
-                val command = "1$currentProgress1" // Tworzymy komendę do wysłania
-                BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                if (currentProgress1<10)
+                {
+                    val command = "100$currentProgress1" // Tworzymy komendę do wysłania
+                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                }
+                if(currentProgress1>9 && currentProgress1<100)
+                {
+                    val command = "10$currentProgress1" // Tworzymy komendę do wysłania
+                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                }
+                if (currentProgress1==100)
+                {
+                    val command = "1$currentProgress1" // Tworzymy komendę do wysłania
+                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                }
             }
         })
 
@@ -63,9 +75,21 @@ class LightingActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                Toast.makeText(this@LightingActivity, "Final Progress: $currentProgress2", Toast.LENGTH_SHORT).show()
-                val command = "2$currentProgress2"
-                BluetoothCommunicationManager.sendData(command)
+                if (currentProgress2<10)
+                {
+                    val command = "200$currentProgress2" // Tworzymy komendę do wysłania
+                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                }
+                if(currentProgress2>9 && currentProgress2<100)
+                {
+                    val command = "20$currentProgress2" // Tworzymy komendę do wysłania
+                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                }
+                if (currentProgress2==100)
+                {
+                    val command = "2$currentProgress2" // Tworzymy komendę do wysłania
+                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                }
             }
         })
 
@@ -83,9 +107,21 @@ class LightingActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                Toast.makeText(this@LightingActivity, "Final Progress: $currentProgress3", Toast.LENGTH_SHORT).show()
-                val command = "3$currentProgress3"
-                BluetoothCommunicationManager.sendData(command)
+                if (currentProgress3<10)
+                {
+                    val command = "300$currentProgress3" // Tworzymy komendę do wysłania
+                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                }
+                if(currentProgress3>9 && currentProgress3<100)
+                {
+                    val command = "30$currentProgress3" // Tworzymy komendę do wysłania
+                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                }
+                if (currentProgress3==100)
+                {
+                    val command = "3$currentProgress3" // Tworzymy komendę do wysłania
+                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                }
             }
         })
     }
