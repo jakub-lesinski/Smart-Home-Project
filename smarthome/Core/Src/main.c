@@ -35,6 +35,7 @@
 #include "bmp2.h"
 #include "bmp2_config.h"
 #include "INA219.h"
+#include <stdint.h>
 
 
 /* USER CODE END Includes */
@@ -74,7 +75,6 @@ char *mainmenu[4] = {"1.Kitchen", "2.Living room", "3.Garage", "4.Alarm"};
 char *menuKitchen[4] = {"1.Lighting", "2.Shutter","",""};
 char *menuKitchenLighting[4] = {"1.On","2.Off","3.Set brightness",""};
 char *menuKitchenShutter[4] = {"1.Down", "2.Up","",""};
-//char *menuKitchenTemperature[4] = {"1.On","2.Off","3.Set Temp",""};
 char *menuLivingroom[4] = {"1.Temperature", "2.Lighting","3.Shutter",""};
 char *menuLivingroomLighting[4] = {"1.On","2.Off","3.Set brightness",""};
 char *menuLivingroomTemperature[4] = {"1.Set Temp","","",""};
@@ -107,6 +107,29 @@ int pinKey;
 int intPart;
 int fracPart;
 int expectedTemp=30;
+
+//PI controler
+
+float setpoint = 25.0f;
+float_t dt = 0.01;
+float_t t = 0.0;
+float_t U=0, P, I, error, integral, u_wykres;
+
+typedef struct
+{
+	float_t Kp;
+	float_t Ki;
+	float_t dt;
+}pi_parameters;
+
+typedef struct
+{
+	pi_parameters p;
+	float_t previous_error, previous_intergral, previous_measured;
+}pi_t;
+
+pi_t my_PI = {.p.Kp=0.616, .p.Ki=225.63, .p.dt=0.001, .previous_error = 0, .previous_intergral=0, .previous_measured=0};
+float_t PI_output;
 
 double temp = 0.0f;
 double press = 0.0f;
@@ -151,6 +174,46 @@ void move_menu(char *a[])
 double roundToTwoDecimals(double value) {
 	return floor(value * 100.0 + 0.5) / 100.0;
 }
+
+//PI controller
+
+float_t calculate_discrete_pi(pi_t* pi, float_t setpoint, float_t measured)
+{
+    // Obliczenie błędu
+    error = setpoint - measured;
+
+    // Część proporcjonalna
+    P = pi->p.Kp * error;
+
+    // Część całkująca
+    integral = pi->previous_intergral + (error + pi->previous_error);
+
+    // Anty-windup: korekta integratora w przypadku nasycenia
+    float_t U_temp = P + pi->p.Ki * integral * (pi->p.dt / 2.0);
+    if (U_temp > 1.0) {
+        U_temp = 1.0;
+        integral = pi->previous_intergral;
+    } else if (U_temp < 0.0) {
+        U_temp = 0.0;
+        integral = pi->previous_intergral;
+    } else {
+        pi->previous_intergral = integral;
+    }
+
+    // Część całkująca
+    I = pi->p.Ki * integral * (pi->p.dt / 2.0);
+
+    // Suma części PI
+    U = P + I;
+
+    U = (U > 1.0) ? 1.0 : U;
+    U = (U < 0.0) ? 0.0 : U;
+
+    pi->previous_error = error;
+
+    return U;
+};
+
 //ENERGY SYSTEM
 
 // Wył/Wł PowerSupply
@@ -242,6 +305,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		  HAL_GPIO_WritePin(Alarm_LED_GPIO_Port, Alarm_LED_Pin, GPIO_PIN_RESET);
 	  };
   }
+    if(htim->Instance == TIM4)
+    {
+        BMP2_ReadData(&bmp2dev, &press, &temp);
+        PI_output = calculate_discrete_pi(&my_PI, setpoint, temp);
+        my_PI.previous_measured = temp;
+    }
 }
 
 /* USER CODE END 0 */
@@ -290,6 +359,8 @@ int main(void)
  //TIMERS AND INTERRUPTS
   HAL_TIM_Base_Start_IT(&htim2);
   BMP2_Init(&bmp2dev);
+  HAL_TIM_Base_Start_IT(&htim4);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
   //ENERGY SYSTEM
   INA219_Init(&ina219, &hi2c1, INA219_ADDRESS);
   INA219_Init(&ina219_2, &hi2c2, INA219_ADDRESS);
@@ -309,6 +380,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+      BMP2_ReadData(&bmp2dev, &press, &temp);
+
 	  if(HAL_GPIO_ReadPin(PIR_Garage_GPIO_Port, PIR_Garage_Pin) == GPIO_PIN_SET){PIR_Garage = true;}
 	  	  else {PIR_Garage = false;};
 	  if(HAL_GPIO_ReadPin(PIR_Kitchen_GPIO_Port, PIR_Kitchen_Pin) == GPIO_PIN_SET){PIR_Kitchen = true;}
@@ -536,22 +609,23 @@ int main(void)
 					intPart = (int)roundedValue;
 					fracPart = (int)((roundedValue - intPart) * 100);
 					snprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
-					__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, 990);
-					HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
 					LCD_WriteCommand(HD44780_CLEAR);
 					LCD_WriteText(result);
+                    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3, PI_output*1000);
+                    symbol[0] = keypad_readkey();
 					if(symbol[0] == '*') {
 						act_menu = menuLivingroomTemperature;
 						position = 1;
 						max_pos = 3;
 						break;
 					}
-					i++;
 				}
 				break;
 			case 2: LCD_WriteCommand(HD44780_CLEAR);
 					LCD_WriteText("Heat");
-					LCD_WriteTextXY("Turned off",0,1);; break;
+					LCD_WriteTextXY("Turned off",0,1);
+                    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3, 0);
+                    break;
 			case 3:
 				i = 0;
 				HAL_Delay(200);
@@ -572,10 +646,7 @@ int main(void)
 					HAL_Delay(200);
 					symbol[0] = keypad_readkey();
 					if(symbol[0] == '*') {
-						tempLivingroom = atoi(buff)*10;
-						if(tempLivingroom >= 1000) {
-							tempLivingroom = 999;
-						}
+						setpoint = atoi(buff);
 						act_menu = menuLivingroomTemperature;
 						position = 1;
 						max_pos = 3;
@@ -965,7 +1036,7 @@ int main(void)
 	//Wyłączenie systemu zasilania
 	if (strcmp(received, "PW00") == 0 && strcmp(lastMessage, "PW00") != 0)
 	{
-		OutputOff();
+		Output_Off();
 
 		strcpy(lastMessage, "PW00");
 	}
@@ -973,7 +1044,7 @@ int main(void)
 	//Włączenie systemu zasilania
 	if (strcmp(received, "PW01") == 0 && strcmp(lastMessage, "PW01") != 0)
 	{
-		OutputOn();
+		Output_On();
 
 		strcpy(lastMessage, "PW01");
 	}
