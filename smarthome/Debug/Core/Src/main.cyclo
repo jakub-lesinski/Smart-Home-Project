@@ -13,6 +13,6 @@
 ../Core/Src/main.c:272:6:sendBluetoothData	1
 ../Core/Src/main.c:278:6:HAL_UART_RxCpltCallback	3
 ../Core/Src/main.c:289:6:HAL_TIM_PeriodElapsedCallback	9
-../Core/Src/main.c:322:5:main	151
-../Core/Src/main.c:1076:6:SystemClock_Config	3
-../Core/Src/main.c:1130:6:Error_Handler	1
+../Core/Src/main.c:322:5:main	153
+../Core/Src/main.c:1081:6:SystemClock_Config	3
+../Core/Src/main.c:1135:6:Error_Handler	1

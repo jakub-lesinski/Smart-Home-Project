@@ -606,6 +606,9 @@ int main(void)
 					HAL_Delay(500);
 					BMP2_ReadData(&bmp2dev, &press, &temp);
 					roundedValue = roundToTwoDecimals(temp);
+					char bufferTemp[20];
+					sprintf(bufferTemp, "%d", roundedValue);
+					sendBluetoothData(bufferTemp);
 					intPart = (int)roundedValue;
 					fracPart = (int)((roundedValue - intPart) * 100);
 					snprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
@@ -798,6 +801,9 @@ int main(void)
  		 	   vshunt = INA219_ReadShuntVolage(&ina219);
  		 	   current = INA219_ReadCurrent(&ina219);
  		 	   power = vbus * current;
+ 		 	   char bufferPower[10];
+ 		 	   sprintf(bufferPower, "%d", power);
+ 		 	   sendBluetoothData(bufferPower);
 
  		 	   // Konwersja na jednostki podstawowe (V i A)
  		 	    solar_volts = vbus / 1000.0;  // mV -> V
@@ -1050,11 +1056,10 @@ int main(void)
 	}
 
 	//Odbieranie zadanej temperatury
-	if(received[0]=='T' && received[1]=='M' )	//Suwak jasności garaż
+	if(received[0]=='T' && received[1]=='M' )
 	{
-		//expectedTemp = (received[2] - '0') * 10 + (received[3] - '0');
+		setpoint = (received[2] - '0') * 10 + (received[3] - '0');
 
-		//Logika do napisania
 	}
 
  	////////////////////////////////////////////////////////////////////////////////////
