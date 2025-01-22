@@ -26,7 +26,7 @@ class ShuttersActivity : AppCompatActivity() {
 
         // Obsługa przełącznika w kuchnii
         binding.switchK.setOnCheckedChangeListener { _, isChecked ->
-            val command = if (isChecked) "SK01" else "SK00" // Wysyłanie komendy w zależności od stanu switcha
+            val command = if (isChecked) "SK01" else "SK00"
             BluetoothCommunicationManager.sendData(command)
         }
 

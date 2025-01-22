@@ -23,7 +23,7 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
         BluetoothCommunicationManager.registerListener(this)
         BluetoothCommunicationManager.startReceiving()
     }
-
+    //Odbiór danych
     override fun onDataReceived(data: String) {
             val firstChar = data[0]
             val secondChar = data[1]
@@ -31,7 +31,7 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
             val fourthChar = data[3]
 
             if((firstChar == 'B') && (secondChar == 'T')) {
-                if(thirdChar=='0') {
+                if(fourthChar=='0') {
                     binding.BatteryImage.setImageResource(R.drawable.off)
                 }
 
@@ -42,7 +42,7 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
             }
 
             if(data.length==4 && firstChar == 'P' && secondChar == 'S') {
-                if(thirdChar=='0') {
+                if(fourthChar=='0') {
                     binding.PowerSupplyImage.setImageResource(R.drawable.off)
                 }
 
@@ -53,7 +53,7 @@ class SolarPanelActivity : AppCompatActivity(), BluetoothCommunicationManager.Bl
             }
 
             if(data.length==4 && firstChar == 'S' && secondChar == 'P') {
-                if(thirdChar=='0') {
+                if(fourthChar=='0') {
                     binding.SPImage.setImageResource(R.drawable.off)
                 }
 

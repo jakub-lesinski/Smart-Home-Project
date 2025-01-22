@@ -44,17 +44,17 @@ class LightingActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 if (currentProgress1<10)
                 {
-                    val command = "100$currentProgress1" // Tworzymy komendę do wysłania
+                    val command = "X00$currentProgress1" // Tworzymy komendę do wysłania
                     BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
                 }
                 if(currentProgress1>9 && currentProgress1<100)
                 {
-                    val command = "10$currentProgress1" // Tworzymy komendę do wysłania
+                    val command = "X0$currentProgress1" // Tworzymy komendę do wysłania
                     BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
                 }
                 if (currentProgress1==100)
                 {
-                    val command = "1$currentProgress1" // Tworzymy komendę do wysłania
+                    val command = "X$currentProgress1" // Tworzymy komendę do wysłania
                     BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
                 }
             }
@@ -77,18 +77,18 @@ class LightingActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 if (currentProgress2<10)
                 {
-                    val command = "200$currentProgress2" // Tworzymy komendę do wysłania
-                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                    val command = "Y00$currentProgress2"
+                    BluetoothCommunicationManager.sendData(command)
                 }
                 if(currentProgress2>9 && currentProgress2<100)
                 {
-                    val command = "20$currentProgress2" // Tworzymy komendę do wysłania
-                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                    val command = "Y0$currentProgress2"
+                    BluetoothCommunicationManager.sendData(command)
                 }
                 if (currentProgress2==100)
                 {
-                    val command = "2$currentProgress2" // Tworzymy komendę do wysłania
-                    BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
+                    val command = "Y$currentProgress2"
+                    BluetoothCommunicationManager.sendData(command)
                 }
             }
         })
@@ -109,17 +109,17 @@ class LightingActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 if (currentProgress3<10)
                 {
-                    val command = "300$currentProgress3" // Tworzymy komendę do wysłania
+                    val command = "Z00$currentProgress3" // Tworzymy komendę do wysłania
                     BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
                 }
                 if(currentProgress3>9 && currentProgress3<100)
                 {
-                    val command = "30$currentProgress3" // Tworzymy komendę do wysłania
+                    val command = "Z0$currentProgress3" // Tworzymy komendę do wysłania
                     BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
                 }
                 if (currentProgress3==100)
                 {
-                    val command = "3$currentProgress3" // Tworzymy komendę do wysłania
+                    val command = "Z$currentProgress3" // Tworzymy komendę do wysłania
                     BluetoothCommunicationManager.sendData(command) // Wysyłamy komendę przez BluetoothCommunicationManager
                 }
             }

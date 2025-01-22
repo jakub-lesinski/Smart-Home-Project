@@ -23,9 +23,9 @@ class TemperatureActivity : AppCompatActivity(), BluetoothCommunicationManager.B
         BluetoothCommunicationManager.startReceiving()
 
         binding.btnSet.setOnClickListener {
-            val wpisanyTekst = binding.ET.text.toString()
-            binding.ExpTempText2.text = "$wpisanyTekst°C"
-            val command = "TM$wpisanyTekst" // Tworzymy komendę do wysłania
+            val enteredText = binding.ET.text.toString()
+            binding.ExpTempText2.text = "$enteredText°C"
+            val command = "TM$enteredText"
             BluetoothCommunicationManager.sendData(command)
         }
     }

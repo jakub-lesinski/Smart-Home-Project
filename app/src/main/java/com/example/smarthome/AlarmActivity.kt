@@ -51,8 +51,8 @@ class AlarmActivity : AppCompatActivity() {
 
         // Obsługa przycisku do sprawdzania hasła
         binding.buttonCheckPassword.setOnClickListener {
-            val wpisanyTekst = binding.ET.text.toString()
-            if (wpisanyTekst == "1234") {  // Jeśli hasło jest poprawne, pokazujemy odpowiedni komunikat i zmieniamy UI
+            val enteredText = binding.ET.text.toString()
+            if (enteredText == "1234") {  // Jeśli hasło jest poprawne, pokazujemy odpowiedni komunikat i zmieniamy UI
                 Toast.makeText(applicationContext, "Password is correct", Toast.LENGTH_SHORT).show()
                 val params = binding.LayoutAlarm.layoutParams as LinearLayout.LayoutParams
                 params.bottomMargin = TypedValue.applyDimension(

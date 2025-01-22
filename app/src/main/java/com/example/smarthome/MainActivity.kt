@@ -8,11 +8,13 @@ import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.smarthome.databinding.ActivityMainBinding
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
     private var btSocket: BluetoothSocket? = null
 
+    @RequiresApi(Build.VERSION_CODES.S)
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,8 +152,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     btSocket = myBltDevice.createRfcommSocketToServiceRecord(MY_UUID)
                     btSocket?.connect()
-                    BluetoothCommunicationManager.btSocket =
-                        btSocket // Assign the socket to the singleton
+                    BluetoothCommunicationManager.btSocket = btSocket
                     runOnUiThread {
                         Toast.makeText(this, "Connected to HC module", Toast.LENGTH_SHORT).show()
                     }
@@ -172,4 +174,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
 

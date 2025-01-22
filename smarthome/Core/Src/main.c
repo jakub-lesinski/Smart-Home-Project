@@ -356,7 +356,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   //LOAD CONFIG
   keypad_config();
-  LCD_Initialize();
+  //LCD_Initialize();
  //TIMERS AND INTERRUPTS
   HAL_TIM_Base_Start_IT(&htim2);
   BMP2_Init(&bmp2dev);
@@ -907,7 +907,7 @@ int main(void)
  	 	strcpy(lastMessage, "LG01");
  	}
 
- 	if(rxBuffer[0]=='1')  //Suwak jasności kuchnia
+ 	if(rxBuffer[0]=='X')  //Suwak jasności kuchnia
  	{
  		brightnessKitchen = (received[1] - '0') * 1000
  		                  + (received[2] - '0') * 100
@@ -915,14 +915,14 @@ int main(void)
  		__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, brightnessKitchen);
  	}
 
- 	if(received[0]=='2')	//Suwak jasności salon
+ 	if(received[0]=='Y')	//Suwak jasności salon
  	{
  		brightnessLivingroom = (received[1] - '0') * 1000
                  + (received[2] - '0') * 100
                  + (received[3] - '0') * 10;
  		__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, brightnessLivingroom);
  	}
- 	if(received[0]=='3')	//Suwak jasności garaż
+ 	if(received[0]=='Z')	//Suwak jasności garaż
  	{
  		brightnessGarage = (received[1] - '0') * 1000
                  + (received[2] - '0') * 100
@@ -1068,6 +1068,8 @@ int main(void)
 
 	}
 
+	sendBluetoothData("TM28");
+	sendBluetoothData("PS01");
  	////////////////////////////////////////////////////////////////////////////////////
     /* USER CODE END WHILE */
 
