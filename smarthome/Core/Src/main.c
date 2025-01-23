@@ -526,16 +526,16 @@ int main(void)
 
 			switch(position) {
 				case 1:
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
-					HAL_Delay(500);
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
+					HAL_Delay(1000);
 				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
 				   kitchenShutter = true;
 				   LCD_WriteText("Shutter");
 				   LCD_WriteTextXY("is lowering",0,1);
 				   break;
 				case 2:
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
-					HAL_Delay(500);
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
+					HAL_Delay(1000);
 					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
 					kitchenShutter = false;
 					LCD_WriteText("Shutter");
@@ -601,39 +601,13 @@ int main(void)
 								HAL_Delay(100);
 							}
 							break;
- 		 	 		default: act_menu = menuLivingroom, position = 1, max_pos = 2; break;
+ 		 	 		default: act_menu = menuLivingroom, position = 1, max_pos = 1; break;
  		 	 	  	  }
  		 	 	}
 	else if(symbol[0] == '*' && act_menu == menuLivingroomTemperature){
 		refreshLCD = true;
 		switch (position){
-			case 1:
-				while(1) {
-					HAL_Delay(500);
-					BMP2_ReadData(&bmp2dev, &press, &temp);
-					roundedValue = roundToTwoDecimals(temp);
-					intPart = (int)roundedValue;
-					fracPart = (int)((roundedValue - intPart) * 100);
-					sprintf(result, sizeof(result), "Temp: %d.%04d", intPart, abs(fracPart));
-					LCD_WriteCommand(HD44780_CLEAR);
-					LCD_WriteText(result);
-                    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3, PI_output*1000);
-                    symbol[0] = keypad_readkey();
-					if(symbol[0] == '*') {
-						act_menu = menuLivingroomTemperature;
-						position = 1;
-						max_pos = 3;
-						break;
-					}
-				}
-				break;
-			case 2: LCD_WriteCommand(HD44780_CLEAR);
-					LCD_WriteText("Heat");
-					LCD_WriteTextXY("Turned off",0,1);
-                    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3, 0);
-                    break;
-			case 3:
-				i = 0;
+			case 1:i = 0;
 				HAL_Delay(200);
 				memset(buff, 0, sizeof(buff));
 				LCD_WriteCommand(HD44780_CLEAR);
@@ -660,7 +634,8 @@ int main(void)
 					}
 					HAL_Delay(100);
 				}
-			break;
+
+				break;
 			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
 				  }
 			}
@@ -751,16 +726,16 @@ int main(void)
  						refreshLCD = true;
  						switch(position) {
  							case 1:
- 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
- 								HAL_Delay(500);
+ 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
+ 								HAL_Delay(1000);
  							   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
  							  garageShutter= true;
  							   LCD_WriteText("Shutter");
  							   LCD_WriteTextXY("is lowering",0,1);
  							   break;
  							case 2:
- 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
- 								HAL_Delay(500);
+ 								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
+ 								HAL_Delay(1000);
  								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
  								garageShutter = false;
  								LCD_WriteText("Shutter");
@@ -773,7 +748,7 @@ int main(void)
  			 						switch(position) {
  			 							case 1:
  			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 500);
- 			 								HAL_Delay(1200);
+ 			 								HAL_Delay(1000);
  			 							   __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
  			 							  garageGate= true;
  			 							   LCD_WriteText("Gate");
@@ -781,7 +756,7 @@ int main(void)
  			 							   break;
  			 							case 2:
  			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 2000);
- 			 								HAL_Delay(1500);
+ 			 								HAL_Delay(1000);
  			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
  			 								garageGate = false;
  			 								LCD_WriteText("Gate");
@@ -964,7 +939,7 @@ int main(void)
 	if (strcmp(received, "GM00") == 0 && strcmp(lastMessage, "GM00") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 500);
-		HAL_Delay(1200);
+		HAL_Delay(1000);
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
 		garageGate= true;
 
@@ -975,7 +950,7 @@ int main(void)
 	if (strcmp(received, "GM01") == 0 && strcmp(lastMessage, "GM01") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 2000);
-		HAL_Delay(1500);
+		HAL_Delay(1000);
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
 		garageGate = false;
 
@@ -986,8 +961,8 @@ int main(void)
 	if (strcmp(received, "SK00") == 0 && strcmp(lastMessage, "SK00") != 0)
 	{
 
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
-		HAL_Delay(500);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
+		HAL_Delay(1000);
 	   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
 	   kitchenShutter = true;
 		strcpy(lastMessage, "SK00");
@@ -996,8 +971,8 @@ int main(void)
 	//Otwarcie rolety w kuchnii
 	if (strcmp(received, "SK01") == 0 && strcmp(lastMessage, "SK01") != 0)
 	{
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
-		HAL_Delay(500);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
+		HAL_Delay(1000);
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
 		kitchenShutter = false;
 		strcpy(lastMessage, "SK01");
@@ -1007,7 +982,7 @@ int main(void)
 	if (strcmp(received, "SL00") == 0 && strcmp(lastMessage, "SL00") != 0)
 	{
 
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 500);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 2000);
 		HAL_Delay(500);
 	   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
 	   livingroomShutter = true;
@@ -1017,7 +992,7 @@ int main(void)
 	//Otwarcie rolety w salonie
 	if (strcmp(received, "SL01") == 0 && strcmp(lastMessage, "SL01") != 0)
 	{
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 2000);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 500);
 		HAL_Delay(500);
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
 		livingroomShutter = false;
@@ -1028,7 +1003,7 @@ int main(void)
 	//Zamknięcie rolety w garażu
 	if (strcmp(received, "SG00") == 0 && strcmp(lastMessage, "SG00") != 0)
 	{
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
 		HAL_Delay(500);
 	    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
 	   	garageShutter= true;
@@ -1038,7 +1013,7 @@ int main(void)
 	//Otwarcie rolety w garażu
 	if (strcmp(received, "SG01") == 0 && strcmp(lastMessage, "SG01") != 0)
 	{
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
 		HAL_Delay(500);
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
 		garageShutter = false;
