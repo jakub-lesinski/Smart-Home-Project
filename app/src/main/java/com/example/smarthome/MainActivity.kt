@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             val pairedDevices = bluetoothAdapter.bondedDevices
             for (device in pairedDevices) {
                 data.append("Device name: ${device.name}\nDevice address: ${device.address}\n")
-                if (device.address == "58:56:00:00:82:B2") { //00:23:00:01:64:84
+                if (device.address == "00:23:00:01:64:84") { //58:56:00:00:82:B2
                     myBltDevice = device
                 }
             }
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                if (::myBltDevice.isInitialized && (myBltDevice.address == "58:56:00:00:82:B2")) {
+                if (::myBltDevice.isInitialized && (myBltDevice.address == "00:23:00:01:64:84")) {
                     Toast.makeText(
                         applicationContext,
                         "${myBltDevice.name}\n${myBltDevice.address}",

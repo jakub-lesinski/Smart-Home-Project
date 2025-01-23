@@ -66,7 +66,7 @@
         android:id="@+id/ExpTempText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="30°C"
+        android:text="25°C"
         android:textColor="@color/white"
         android:layout_marginBottom="20dp"
         android:textSize="100dp"/>

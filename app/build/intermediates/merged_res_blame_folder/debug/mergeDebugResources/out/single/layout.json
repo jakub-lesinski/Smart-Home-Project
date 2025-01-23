@@ -24,6 +24,10 @@
         "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_main.xml"
     },
     {
+        "merged": "com.example.smarthome.app-mergeDebugResources-49:/layout/activity_temperature.xml",
+        "source": "com.example.smarthome.app-main-52:/layout/activity_temperature.xml"
+    },
+    {
         "merged": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-mergeDebugResources-49:\\layout\\activity_temperature.xml",
         "source": "C:\\Users\\rimpe\\.gradle\\daemon\\8.4\\com.example.smarthome.app-main-52:\\layout\\activity_temperature.xml"
     },

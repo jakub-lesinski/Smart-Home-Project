@@ -86,6 +86,14 @@ char *menuGarageGate[4] = {"1.Down", "2.Up","",""};
 char *menuAlarm[4] = {"1.On","2.Off","3. Set Pin",""};
 char **act_menu = mainmenu;
 
+//shutter times
+uint16_t shutter_up = 1200;
+uint16_t shutter_down = 1200;
+//gate times
+uint16_t gate_up = 1200;
+uint16_t gate_down = 1200;
+
+
 bool refreshLCD = false;
 bool alarm = false;
 bool alarmLED = false;
@@ -110,7 +118,7 @@ int expectedTemp=30;
 
 //PI controler
 
-float setpoint = 25.0f;
+float setpoint = 22.0f;
 float_t dt = 0.01;
 float_t t = 0.0;
 float_t U=0, P, I, error, integral, u_wykres;
@@ -138,7 +146,7 @@ double roundedValue;
 //ENERGY SYSTEM
 INA219_t ina219, ina219_2;
 
-uint16_t vbus, vshunt, current, power, vbus2, vshunt2, current2, power2;
+uint32_t vbus, vshunt, current, power, vbus2, vshunt2, current2, power2;
 uint16_t energymode = 1;
 bool PowerSupply, Battery, Output, Solar;
 float solar_volts, vshunt_volts, solar_amps, output_volts, vshunt_volts2, current_amps2, solar_power;
@@ -264,6 +272,17 @@ bool Output_On(void) {
     Output_SetState(GPIO_PIN_RESET);
     return Output = true;
 }
+
+bool Solar_On(void) {
+	sendBluetoothData("SP01");
+    return Solar = true;
+}
+
+bool Solar_Off(void) {
+	sendBluetoothData("SP00");
+    return Solar = false;
+}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -356,7 +375,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   //LOAD CONFIG
   keypad_config();
-  //LCD_Initialize();
+  LCD_Initialize();
  //TIMERS AND INTERRUPTS
   HAL_TIM_Base_Start_IT(&htim2);
   BMP2_Init(&bmp2dev);
@@ -460,88 +479,88 @@ int main(void)
  	 		default: act_menu = menuAlarm, position = 1, max_pos = 2; break;
  		}
  	}
-	else if(symbol[0] == '*' && act_menu == menuKitchen){
-		refreshLCD = true;
-		switch (position){
-			case 1: act_menu = menuKitchenLighting, position = 1, max_pos = 3; break;
-			case 2: act_menu = menuKitchenShutter, position = 1, max_pos = 2; break;
-			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
-		}
-	}
-	else if(symbol[0] == '*' && act_menu == menuKitchenLighting){
- 		 	 		refreshLCD = true;
- 		 	 	  switch (position){
- 		 	 		case 1: LCD_WriteCommand(HD44780_CLEAR);
- 		 	 				LCD_WriteText("Light");
- 		 	 				LCD_WriteTextXY("turned on",0,1);
- 		 	 				__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, brightnessKitchen);
- 		 	 				HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
- 		 	 				break;
-
- 		 	 		case 2: LCD_WriteCommand(HD44780_CLEAR);
- 				 	 		LCD_WriteText("Light");
- 				 	 		LCD_WriteTextXY("turned off",0,1);
- 				 	 		HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_4);
- 				 	 		break;
-
- 		 	 		case 3:
-							i = 0;
-							HAL_Delay(200);
-							memset(buff, 0, sizeof(buff));
-							LCD_WriteCommand(HD44780_CLEAR);
-							LCD_WriteText("Write Bright");
-							while(1) {
-								refreshLCD = true;
-								symbol[0] = keypad_readkey();
-								if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
-									buff[i] = symbol[0];
-									i++;
-									buff[i] = '\0';
-									LCD_WriteCommand(HD44780_CLEAR);
-									LCD_WriteText("Brightness: ");
-									LCD_WriteTextXY(buff, 0, 1);
-								}
-								HAL_Delay(200);
-								symbol[0] = keypad_readkey();
-								if(symbol[0] == '*') {
-									brightnessKitchen = atoi(buff)*10;
-									if(brightnessKitchen >= 1000) {
-										brightnessKitchen = 999;
-									}
-								   __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, brightnessKitchen);
-									act_menu = menuKitchenLighting;
-									position = 1;
-									max_pos = 3;
-									break;
-								}
-								HAL_Delay(100);
-							}
-							break;
- 		 	 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
- 		 	 	  	  }
-	}
-
-	else if(symbol[0] == '*' && act_menu == menuKitchenShutter) {
-			refreshLCD = true;
-
-			switch(position) {
-				case 1:
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
-					HAL_Delay(1000);
-				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
-				   kitchenShutter = true;
-				   LCD_WriteText("Shutter");
-				   LCD_WriteTextXY("is lowering",0,1);
-				   break;
-				case 2:
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
-					HAL_Delay(1000);
-					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-					kitchenShutter = false;
-					LCD_WriteText("Shutter");
-					LCD_WriteTextXY("go up",0,1);
-			}
-	}
+//	else if(symbol[0] == '*' && act_menu == menuKitchen){
+//		refreshLCD = true;
+//		switch (position){
+//			case 1: act_menu = menuKitchenLighting, position = 1, max_pos = 3; break;
+//			case 2: act_menu = menuKitchenShutter, position = 1, max_pos = 2; break;
+//			default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
+//		}
+//	}
+//	else if(symbol[0] == '*' && act_menu == menuKitchenLighting){
+// 		 	 		refreshLCD = true;
+// 		 	 	  switch (position){
+// 		 	 		case 1: LCD_WriteCommand(HD44780_CLEAR);
+// 		 	 				LCD_WriteText("Light");
+// 		 	 				LCD_WriteTextXY("turned on",0,1);
+// 		 	 				__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, brightnessKitchen);
+// 		 	 				HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+// 		 	 				break;
+//
+// 		 	 		case 2: LCD_WriteCommand(HD44780_CLEAR);
+// 				 	 		LCD_WriteText("Light");
+// 				 	 		LCD_WriteTextXY("turned off",0,1);
+// 				 	 		HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_4);
+// 				 	 		break;
+//
+// 		 	 		case 3:
+//							i = 0;
+//							HAL_Delay(200);
+//							memset(buff, 0, sizeof(buff));
+//							LCD_WriteCommand(HD44780_CLEAR);
+//							LCD_WriteText("Write Bright");
+//							while(1) {
+//								refreshLCD = true;
+//								symbol[0] = keypad_readkey();
+//								if(symbol[0] >= '0' && symbol[0] <= '9' && i < sizeof(buff) - 1) {
+//									buff[i] = symbol[0];
+//									i++;
+//									buff[i] = '\0';
+//									LCD_WriteCommand(HD44780_CLEAR);
+//									LCD_WriteText("Brightness: ");
+//									LCD_WriteTextXY(buff, 0, 1);
+//								}
+//								HAL_Delay(200);
+//								symbol[0] = keypad_readkey();
+//								if(symbol[0] == '*') {
+//									brightnessKitchen = atoi(buff)*10;
+//									if(brightnessKitchen >= 1000) {
+//										brightnessKitchen = 999;
+//									}
+//								   __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, brightnessKitchen);
+//									act_menu = menuKitchenLighting;
+//									position = 1;
+//									max_pos = 3;
+//									break;
+//								}
+//								HAL_Delay(100);
+//							}
+//							break;
+// 		 	 		default: act_menu = menuKitchen, position = 1, max_pos = 2; break;
+// 		 	 	  	  }
+//	}
+//
+//	else if(symbol[0] == '*' && act_menu == menuKitchenShutter) {
+//			refreshLCD = true;
+//
+//			switch(position) {
+//				case 1:
+//					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
+//					HAL_Delay(shutter_down);
+//				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
+//				   kitchenShutter = true;
+//				   LCD_WriteText("Shutter");
+//				   LCD_WriteTextXY("is lowering",0,1);
+//				   break;
+//				case 2:
+//					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
+//					HAL_Delay(shutter_down);
+//					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
+//					kitchenShutter = false;
+//					LCD_WriteText("Shutter");
+//					LCD_WriteTextXY("go up",0,1);
+//			}
+//	}
 
 	else if(symbol[0] == '*' && act_menu == menuLivingroom){
 					refreshLCD = true;
@@ -645,7 +664,7 @@ int main(void)
 			switch(position) {
 				case 1:
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 500);
-					HAL_Delay(500);
+					HAL_Delay(shutter_down);
 				   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
 				   livingroomShutter = true;
 				   LCD_WriteText("Shutter");
@@ -653,7 +672,7 @@ int main(void)
 				   break;
 				case 2:
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 2000);
-					HAL_Delay(500);
+					HAL_Delay(shutter_up);
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
 					livingroomShutter = false;
 					LCD_WriteText("Shutter");
@@ -727,7 +746,7 @@ int main(void)
  						switch(position) {
  							case 1:
  								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
- 								HAL_Delay(1000);
+ 								HAL_Delay(shutter_down);
  							   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
  							  garageShutter= true;
  							   LCD_WriteText("Shutter");
@@ -735,7 +754,7 @@ int main(void)
  							   break;
  							case 2:
  								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
- 								HAL_Delay(1000);
+ 								HAL_Delay(shutter_up);
  								__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
  								garageShutter = false;
  								LCD_WriteText("Shutter");
@@ -748,7 +767,7 @@ int main(void)
  			 						switch(position) {
  			 							case 1:
  			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 500);
- 			 								HAL_Delay(1000);
+ 			 								HAL_Delay(1200);
  			 							   __HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
  			 							  garageGate= true;
  			 							   LCD_WriteText("Gate");
@@ -756,7 +775,7 @@ int main(void)
  			 							   break;
  			 							case 2:
  			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 2000);
- 			 								HAL_Delay(1000);
+ 			 								HAL_Delay(1200);
  			 								__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
  			 								garageGate = false;
  			 								LCD_WriteText("Gate");
@@ -772,20 +791,24 @@ int main(void)
  		max_pos = 4;
  	}
 
+ 	__HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_3, U*1000);
+
  	HAL_Delay(200);
  	///////////////SYSTEM TEMPERATURY///////////////////////////////////////////////////
  	BMP2_ReadData(&bmp2dev, &press, &temp);
- 	roundedValue = roundToTwoDecimals(temp);
- 	char bufferTemp[20];
-	sprintf(bufferTemp, "TM%d", roundedValue);
-	sendBluetoothData(bufferTemp);
+ 	 	roundedValue = roundToTwoDecimals(temp);
+ 	 	int twoDigits = (int)roundedValue % 100;
+ 	 	char bufferTemp[4];
+ 		sprintf(bufferTemp, "TM%02d", twoDigits);
+ 		sendBluetoothData(bufferTemp);
  	///////////////SYSTEM ZASILANIA///////////////////////////////////////////////////
  	vbus = INA219_ReadBusVoltage(&ina219);
  		 	   vshunt = INA219_ReadShuntVolage(&ina219);
  		 	   current = INA219_ReadCurrent(&ina219);
  		 	   power = vbus * current;
+ 		 	   int threeDigits = power /10000;
  		 	   char bufferPower[10];
- 		 	   sprintf(bufferPower, "W%d", power);
+ 		 	   sprintf(bufferPower, "W%03d", threeDigits);
  		 	   sendBluetoothData(bufferPower);
 
  		 	   // Konwersja na jednostki podstawowe (V i A)
@@ -815,8 +838,8 @@ int main(void)
  			   	 	       current_amps2 = round(current_amps2 * 1000) /  1000;
  	    if(Output == true)
  	    {
- 		if(solar_volts >= 4.6) energymode = 1;
- 		else if(PowerSupply == false && solar_volts < 4.5 && energymode != 2) energymode = 2;
+ 		if(solar_volts >= 4.7) energymode = 1;
+ 		else if(PowerSupply == false && solar_volts < 4.6 && energymode != 2) energymode = 2;
  		if(output_volts < 4) energymode = 3;
  	    }
  		if(Output == false) energymode = 4; //wylaczenie zasilania, panel jesli jest w stanie to ładuje akumulator
@@ -824,23 +847,23 @@ int main(void)
  		case 1:
  			PowerSupply_Off();
  			Battery_Off();
- 			Solar = true;
+ 			Solar_On();
  			break;
  		case 2:
  			Battery_On();
- 			Solar = false;
+ 			Solar_Off();
  			break;
 
  		case 3:
  			Battery_Off();
  			PowerSupply_On();
- 			Solar = false;
+ 			Solar_Off();
 
  			break;
  		case 4:
  			PowerSupply_Off();
  			Battery_Off();
- 			Solar = false;
+ 			Solar_Off();
  			break;
  		}
  	////////////////////////////////////////////////////////////////////////////////////
@@ -939,7 +962,7 @@ int main(void)
 	if (strcmp(received, "GM00") == 0 && strcmp(lastMessage, "GM00") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 500);
-		HAL_Delay(1000);
+		HAL_Delay(gate_down);
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
 		garageGate= true;
 
@@ -950,7 +973,7 @@ int main(void)
 	if (strcmp(received, "GM01") == 0 && strcmp(lastMessage, "GM01") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 2000);
-		HAL_Delay(1000);
+		HAL_Delay(gate_up);
 		__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_4, 0);
 		garageGate = false;
 
@@ -962,7 +985,7 @@ int main(void)
 	{
 
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2000);
-		HAL_Delay(1000);
+		HAL_Delay(1200);
 	   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 0);
 	   kitchenShutter = true;
 		strcpy(lastMessage, "SK00");
@@ -972,7 +995,7 @@ int main(void)
 	if (strcmp(received, "SK01") == 0 && strcmp(lastMessage, "SK01") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 500);
-		HAL_Delay(1000);
+		HAL_Delay(1200);
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
 		kitchenShutter = false;
 		strcpy(lastMessage, "SK01");
@@ -983,7 +1006,7 @@ int main(void)
 	{
 
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 2000);
-		HAL_Delay(500);
+		HAL_Delay(shutter_down);
 	   __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
 	   livingroomShutter = true;
 		strcpy(lastMessage, "SL00");
@@ -993,7 +1016,7 @@ int main(void)
 	if (strcmp(received, "SL01") == 0 && strcmp(lastMessage, "SL01") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 500);
-		HAL_Delay(500);
+		HAL_Delay(shutter_up);
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 0);
 		livingroomShutter = false;
 		strcpy(lastMessage, "SL01");
@@ -1004,7 +1027,7 @@ int main(void)
 	if (strcmp(received, "SG00") == 0 && strcmp(lastMessage, "SG00") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 2000);
-		HAL_Delay(500);
+		HAL_Delay(800);
 	    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
 	   	garageShutter= true;
 		strcpy(lastMessage, "SG00");
@@ -1014,7 +1037,7 @@ int main(void)
 	if (strcmp(received, "SG01") == 0 && strcmp(lastMessage, "SG01") != 0)
 	{
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 500);
-		HAL_Delay(500);
+		HAL_Delay(800);
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3, 0);
 		garageShutter = false;
 		strcpy(lastMessage, "SG01");
@@ -1043,8 +1066,7 @@ int main(void)
 
 	}
 
-	sendBluetoothData("TM28");
-	sendBluetoothData("PS01");
+	memset(rxBuffer, 0, sizeof(rxBuffer));
  	////////////////////////////////////////////////////////////////////////////////////
     /* USER CODE END WHILE */
 
